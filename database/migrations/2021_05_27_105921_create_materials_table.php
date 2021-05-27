@@ -15,11 +15,11 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('m_materials', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('name');
-            $table->string('unit');
-            $table->string('total');
-            $table->string('price');
+            $table->string('code')->comment('Kode');
+            $table->string('name')->comment('Nama');
+            $table->string('unit')->comment('Satuan');
+            $table->string('total')->comment('Total Barang Sekarang');
+            $table->string('price')->comment('Harga');
             $table->char('type', 1)->comment('1: Bahan Baku; 2: Bahan Penolong');
             $table->timestamps();
         });
