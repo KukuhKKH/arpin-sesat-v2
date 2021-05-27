@@ -15,9 +15,9 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('m_teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('part');
-            $table->string('salary');
+            $table->string('name')->comment('nama');
+            $table->string('part')->comment('bagian / tim untuk apa');
+            $table->string('salary')->comment('gaji');
             $table->timestamps();
         });
     }

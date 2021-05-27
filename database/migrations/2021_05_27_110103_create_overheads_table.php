@@ -15,9 +15,9 @@ class CreateOverheadsTable extends Migration
     {
         Schema::create('m_overheads', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('price');
-            $table->text('description');
+            $table->string('name')->comment('nama');
+            $table->string('price')->comment('harga');
+            $table->text('description')->comment('deskripsi');
             $table->char('type', 1)->comment('1: Tetap; 2: Variabel');
             $table->timestamps();
         });
