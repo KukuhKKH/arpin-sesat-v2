@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Master\CoaController;
+use App\Http\Controllers\Admin\Master\MaterialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::group(['prefix' => 'master', 'as' => 'master.'], function() {
             Route::resource('coa', CoaController::class);
+            Route::resource('material', MaterialController::class);
         });
     });
 });

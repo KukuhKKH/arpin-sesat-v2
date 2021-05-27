@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Master\Material;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -12,9 +13,20 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = $request->all();
+        $query = Material::query();
+        $query->where('type', 1);
+        $material = $query->paginate(10);
+        $title = [
+            'page_name' => "Halaman Data Bahan Baku",
+            'page_description' => 'Manage Data Bahan Baku'
+        ];
+        if($request->ajax()) {
+            return view("pages.admin.master.material.pagination",compact('data', 'material'))->render();
+        }
+        return view('pages.admin.master.material.index', compact('data', 'material', 'title'));
     }
 
     /**
