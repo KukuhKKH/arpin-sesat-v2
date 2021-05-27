@@ -29,6 +29,14 @@
 
                 </ul>
             </li>
+            <li>
+                <a href="#report" data-toggle="collapse" aria-expanded="false">
+                    Laporan<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                </a>
+                <ul id="report" class="nav nav-second collapse">
+
+                </ul>
+            </li>
         </ul>
     </nav>
 </aside>
