@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Admin\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Material;
+use App\Models\Master\Supplier;
 use App\Models\Transaction\MaterialTransaction;
 
 class MaterialTransactionController extends Controller
 {
     public function index(Request $request, $type) {
         $data = $request->all();
+        $supplier = Supplier::all();
         $material = Material::where('type', $type)->get();
         $query = MaterialTransaction::query();
         $query->where('type', $type);
-        $materialTransaction = $query->paginate(10);
+        $materialTransaction = $query->with('supplier')->paginate(10);
         if($type == 1) {
             $title = [
                 'page_name' => "Halaman Transaksi Bahan Baku",
@@ -29,7 +31,7 @@ class MaterialTransactionController extends Controller
         if($request->ajax()) {
             return view("pages.admin.transaction.material.pagination",compact('data', 'materialTransaction'))->render();
         }
-        return view('pages.admin.transaction.material.index', compact('data', 'material', 'title', 'materialTransaction'));
+        return view('pages.admin.transaction.material.index', compact('data', 'material', 'title', 'materialTransaction', 'supplier'));
     }
 
     public function store(Request $request) {

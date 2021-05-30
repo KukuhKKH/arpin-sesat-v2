@@ -37,6 +37,17 @@
                     <input type="hidden" name="type" value="{{ request()->segment(4) == 1 ? 1 : 2 }}">
                     <div class="modal-body">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Pemasok</label>
+                                    <select name="supplier_id" id="supplier_id" class="form-control">
+                                        <option value="" selected disabled>== Pilih Bahan ==</option>
+                                        @foreach ($supplier as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Tanggal</label>

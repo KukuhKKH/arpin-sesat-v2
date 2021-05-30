@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Pemasok</th>
             <th>Tanggal Masuk</th>
             <th>Nama Bahan</th>
             <th>Harga</th>
@@ -13,7 +14,8 @@
         @forelse ($materialTransaction as $value)
             <tr>
                 <td>{{ ($materialTransaction->currentpage()-1) * $materialTransaction->perpage() + $loop->index + 1 }}</td>
-                <td>{{ date('d, F Y', strtotime($value->date)) }}</td>
+                <td>{{ $value->supplier->name }}</td>
+                <td>{{ date('d F Y', strtotime($value->date)) }}</td>
                 <td>{{ $value->material->name }}</td>
                 <td>{{ $value->price }}</td>
                 <td>{{ $value->amount }}</td>
