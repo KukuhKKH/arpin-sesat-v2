@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Bahan {{ request()->segment(4) == 1 ? 'Baku' : 'Penolong' }}</button>
+                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Pegawai</button>
                         </div>
                         <div>
 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="panel-body" id="table_data">
-                    @include('pages.admin.master.material.pagination')
+                    @include('pages.admin.master.employee.pagination')
                 </div>
             </div>
         </div>
@@ -34,32 +34,23 @@
                 <form action="" id="form-data">
                     @csrf
                     <input type="hidden" id="fieldId">
-                    <input type="hidden" value="0" name="total">
-                    <input type="hidden" name="type" value="{{ request()->segment(4) == 1 ? 1 : 2 }}">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Kode Bahan</label>
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="Kode Bahan">
+                                    <label for="">Nama Tim</label>
+                                    <select name="team_id" id="team_id" class="form-control">
+                                        <option value="" selected disabled>== Pilih Tim ==</option>
+                                        @foreach ($team as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nama Bahan</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama Bahan">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Satuan</label>
-                                    <input type="text" class="form-control" id="unit" name="unit" placeholder="Satuan">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Harga</label>
-                                    <input type="text" class="form-control" id="price" name="price" placeholder="Harga">
+                                    <label for="">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
                                 </div>
                             </div>
                         </div>
@@ -76,14 +67,13 @@
 @section('js')
 <script>
     let type
-    let jenis = `{{ request()->segment(4) == 1 ? 'Baku' : 'Penolong' }}`
     $(document).ready(() => {
         $("#form-data").on('submit', e => {
             e.preventDefault()
             loading('show', $("#modal-data"))
             if(type == 'POST') {
                 new Promise((resolve, reject) => {
-                    $axios.post(`{{ route('master.material.store') }}`, $("#form-data").serialize())
+                    $axios.post(`{{ route('master.employee.store') }}`, $("#form-data").serialize())
                         .then(({data}) => {
                             if(data.status == false) {
                                 loading('hide', $("#modal-data"))
@@ -102,7 +92,7 @@
                 })
             } else if(type == "PUT") {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.material.update', ['material' => ':id']) }}`
+                    let url = `{{ route('master.employee.update', ['employee' => ':id']) }}`
                     url = url.replace(':id', $("#fieldId").val())
                     $axios.put(`${url}`, $("#form-data").serialize())
                         .then(({data}) => {
@@ -125,26 +115,24 @@
         type = `POST`
         $("#form-data")[0].reset()
         $("#btn-submit").html(`Simpan`)
-        $(".modal-title").html(`Tambah Bahan ${jenis}`)
+        $(".modal-title").html(`Tambah Pegawai`)
         $("#modal-data").modal('show')
     }
 
     const editData = id => {
         new Promise((resolve, reject) => {
-            let url = `{{ route('master.material.edit', ['material' => ':id']) }}`
+            let url = `{{ route('master.employee.edit', ['employee' => ':id']) }}`
             url = url.replace(':id', id)
             $axios.get(`${url}`)
                 .then(({data}) => {
-                    let material = data.data
+                    let employee = data.data
                     type = `PUT`
                     $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
-                    $(".modal-title").html(`Update Bahan ${jenis}`)
-                    $("#fieldId").val(material.id)
-                    $("#code").val(material.code)
-                    $("#name").val(material.name)
-                    $("#unit").val(material.unit)
-                    $("#price").val(material.price)
+                    $(".modal-title").html(`Update Pegawai`)
+                    $("#fieldId").val(employee.id)
+                    $("#name").val(employee.name)
+                    $("#team_id").val(employee.team_id)
                     $("#modal-data").modal('show')
                 })
         })
@@ -163,16 +151,11 @@
         .then(res => {
             if(res.isConfirmed) {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.material.destroy', ['material' => ':id']) }}`
+                    let url = `{{ route('master.employee.destroy', ['employee' => ':id']) }}`
                     url = url.replace(':id', id)
                     $axios.delete(`${url}`)
                         .then(({data}) => {
                             toastr.success(data.message.body, data.message.head)
-                            // $swal.fire({
-                            //     icon: 'success',
-                            //     title: data.message.head,
-                            //     text: data.message.body
-                            // })
                             refresh_table(URL_NOW)
                         })
                 })

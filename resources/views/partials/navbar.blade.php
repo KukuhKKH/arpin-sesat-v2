@@ -14,11 +14,13 @@
                 </a>
                 <ul id="master" class="nav nav-second collapse {{ request()->segment(2) == 'master' ? 'show' : '' }}">
                     <li class="{{ request()->segment(3) == 'coa' ? 'active' : '' }}"><a href="{{ route('master.coa.index') }}"> COA</a></li>
-                    <li><a href="{{ route('master.material.index') }}"> Bahan Baku</a></li>
-                    <li><a href=""> Bahan Penolong</a></li>
-                    <li><a href=""> Overhead</a></li>
-                    <li><a href=""> Tim</a></li>
-                    <li><a href=""> Pegawai</a></li>
+                    <li class="{{ request()->segment(4) == 1 && request()->segment(3) == 'material' ? 'active' : '' }}"><a href="{{ route('master.material.index', 1) }}"> Bahan Baku</a></li>
+                    <li class="{{ request()->segment(4) == 2 && request()->segment(3) == 'material' ? 'active' : '' }}"><a href="{{ route('master.material.index', 2) }}"> Bahan Penolong</a></li>
+                    <li class="{{ request()->segment(4) == 1 && request()->segment(3) == 'overhead' ? 'active' : '' }}"><a href="{{ route('master.overhead.index', 1) }}"> Overhead Tetap</a></li>
+                    <li class="{{ request()->segment(4) == 2 && request()->segment(3) == 'overhead' ? 'active' : '' }}"><a href="{{ route('master.overhead.index', 2) }}"> Overhead Variabel</a></li>
+                    <li class="{{ request()->segment(3) == 'team' ? 'active' : '' }}"><a href="{{ route('master.team.index') }}"> Tim</a></li>
+                    <li class="{{ request()->segment(3) == 'employee' ? 'active' : '' }}"><a href="{{ route('master.employee.index') }}"> Pegawai</a></li>
+                    <li class="{{ request()->segment(3) == 'supplier' ? 'active' : '' }}"><a href="{{ route('master.supplier.index') }}"> Pemasok</a></li>
                 </ul>
             </li>
             <li>

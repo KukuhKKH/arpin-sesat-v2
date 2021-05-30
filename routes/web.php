@@ -19,12 +19,4 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', function () {
         return view('welcome');
     });
-
-    Route::group(['prefix' => 'admin'], function() {
-
-        Route::group(['prefix' => 'master', 'as' => 'master.'], function() {
-            Route::resource('coa', CoaController::class);
-            Route::resource('material', MaterialController::class);
-        });
-    });
 });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Master\MaterialCreateRequest;
+use App\Http\Requests\Master\MaterialUpdateRequest;
 use App\Models\Master\Material;
 use Illuminate\Http\Request;
 
@@ -13,30 +15,27 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $type)
     {
         $data = $request->all();
         $query = Material::query();
-        $query->where('type', 1);
+        $query->where('type', $type);
         $material = $query->paginate(10);
-        $title = [
-            'page_name' => "Halaman Data Bahan Baku",
-            'page_description' => 'Manage Data Bahan Baku'
-        ];
+        if($type == 1) {
+            $title = [
+                'page_name' => "Halaman Data Bahan Baku",
+                'page_description' => 'Manage Data Bahan Baku'
+            ];
+        } else {
+            $title = [
+                'page_name' => "Halaman Data Bahan Penolong",
+                'page_description' => 'Manage Data Bahan Penolong'
+            ];
+        }
         if($request->ajax()) {
             return view("pages.admin.master.material.pagination",compact('data', 'material'))->render();
         }
         return view('pages.admin.master.material.index', compact('data', 'material', 'title'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,20 +44,21 @@ class MaterialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MaterialCreateRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        Material::create($request->all());
+        if($request->type == 1) {
+            $type = 'Bahan Baku';
+        } else {
+            $type = 'Bahan Penolong';
+        }
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'head' => 'Berhasil',
+                'body' => 'Berhasil menambahkan '. $type
+            ]
+        ], 200);
     }
 
     /**
@@ -69,7 +69,10 @@ class MaterialController extends Controller
      */
     public function edit($id)
     {
-        //
+        return response()->json([
+            'status' => true,
+            'data' => Material::find($id)
+        ], 200);
     }
 
     /**
@@ -79,9 +82,22 @@ class MaterialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MaterialUpdateRequest $request, $id)
     {
-        //
+        $material = Material::find($id);
+        $material->update($request->all());
+        if($request->type == 1) {
+            $type = 'Bahan Baku';
+        } else {
+            $type = 'Bahan Penolong';
+        }
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'head' => 'Berhasil',
+                'body' => 'Berhasil update '. $type
+            ]
+        ], 200);
     }
 
     /**
@@ -92,6 +108,19 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $material = Material::find($id);
+        if($material->type == 1) {
+            $type = 'Bahan Baku';
+        } else {
+            $type = 'Bahan Penolong';
+        }
+        $material->delete();
+        return response()->json([
+            'status' => true,
+            'message' => [
+                'head' => 'Berhasil',
+                'body' => 'Berhasil hapus '. $type
+            ]
+        ], 200);
     }
 }

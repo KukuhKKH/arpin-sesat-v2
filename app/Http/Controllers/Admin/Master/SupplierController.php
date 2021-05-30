@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Master\TeamCreateRequest;
-use App\Http\Requests\Master\TeamUpdateRequest;
-use App\Models\Master\Team;
+use App\Http\Requests\Master\SupplierCreateRequest;
+use App\Http\Requests\Master\SupplierUpdateRequest;
+use App\Models\Master\Supplier;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,16 +18,16 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $query = Team::query();
-        $team = $query->paginate(10);
+        $query = Supplier::query();
+        $supplier = $query->paginate(10);
         $title = [
-            'page_name' => "Halaman Data Tim",
-            'page_description' => 'Manage Data Tim'
+            'page_name' => "Halaman Data Pemasok",
+            'page_description' => 'Manage Data Pemasok'
         ];
         if($request->ajax()) {
-            return view("pages.admin.master.team.pagination",compact('data', 'team'))->render();
+            return view("pages.admin.master.supplier.pagination",compact('data', 'supplier'))->render();
         }
-        return view('pages.admin.master.team.index', compact('data', 'team', 'title'));
+        return view('pages.admin.master.supplier.index', compact('data', 'supplier', 'title'));
     }
 
     /**
@@ -36,14 +36,14 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamCreateRequest $request)
+    public function store(SupplierCreateRequest $request)
     {
-        Team::create($request->all());
+        Supplier::create($request->all());
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil menambahkan data tim'
+                'body' => 'Berhasil menambahkan data pemasok'
             ]
         ], 200);
     }
@@ -58,7 +58,7 @@ class TeamController extends Controller
     {
         return response()->json([
             'status' => true,
-            'data' => Team::find($id)
+            'data' => Supplier::find($id)
         ], 200);
     }
 
@@ -69,15 +69,15 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TeamUpdateRequest $request, $id)
+    public function update(SupplierUpdateRequest $request, $id)
     {
-        $tim = Team::find($id);
-        $tim->update($request->all());
+        $pemasok = Supplier::find($id);
+        $pemasok->update($request->all());
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil update tim'
+                'body' => 'Berhasil update pemasok'
             ]
         ], 200);
     }
@@ -90,13 +90,13 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        $tim = Team::find($id);
-        $tim->delete();
+        $pemasok = Supplier::find($id);
+        $pemasok->delete();
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil hapus tim'
+                'body' => 'Berhasil hapus pemasok'
             ]
         ], 200);
     }

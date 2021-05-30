@@ -9,4 +9,5 @@ class Overhead extends Model
 {
     use HasFactory;
     protected $table = "m_overheads";
+    protected $fillable = ['name', 'price', 'description', 'type'];
 }

@@ -2,16 +2,16 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Kode</th>
-            <th>Nama Akun</th>
+            <th>Nama Tim</th>
+            <th>Nama Pegawai</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @forelse ($coa as $value)
+        @forelse ($employee as $value)
             <tr>
-                <td>{{ ($coa->currentpage()-1) * $coa->perpage() + $loop->index + 1 }}</td>
-                <td>{{ $value->code }}</td>
+                <td>{{ ($employee->currentpage()-1) * $employee->perpage() + $loop->index + 1 }}</td>
+                <td>{{ $value->team->name }}</td>
                 <td>{{ $value->name }}</td>
                 <td>
                     <button type="button" class="btn-sm btn btn-success" onclick="editData({{ $value->id }})"><i class="pe-7s-pen"></i></button>
@@ -26,4 +26,4 @@
     </tbody>
 </table>
 
-{{ $coa->appends($data)->links() }}
+{{ $employee->appends($data)->links() }}

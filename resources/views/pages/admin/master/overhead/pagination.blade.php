@@ -2,17 +2,19 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Kode</th>
-            <th>Nama Akun</th>
+            <th>Nama</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @forelse ($coa as $value)
+        @forelse ($overhead as $value)
             <tr>
-                <td>{{ ($coa->currentpage()-1) * $coa->perpage() + $loop->index + 1 }}</td>
-                <td>{{ $value->code }}</td>
+                <td>{{ ($overhead->currentpage()-1) * $overhead->perpage() + $loop->index + 1 }}</td>
                 <td>{{ $value->name }}</td>
+                <td>Rp. {{ number_format($value->price) }}</td>
+                <td>{{ $value->description }}</td>
                 <td>
                     <button type="button" class="btn-sm btn btn-success" onclick="editData({{ $value->id }})"><i class="pe-7s-pen"></i></button>
                     <button class="btn-sm btn btn-danger hapus" onclick="deleteData({{ $value->id }})" type="button"><i class="pe-7s-trash"></i></button>
@@ -26,4 +28,4 @@
     </tbody>
 </table>
 
-{{ $coa->appends($data)->links() }}
+{{ $overhead->appends($data)->links() }}

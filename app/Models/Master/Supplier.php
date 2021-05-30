@@ -5,9 +5,9 @@ namespace App\Models\Master;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class Supplier extends Model
 {
     use HasFactory;
-    protected $table = "m_materials";
-    protected $fillable = ['code', 'name', 'unit', 'price', 'total', 'type'];
+    protected $table = 'm_suppliers';
+    protected $fillable = ['name', 'address', 'email', 'phone_number'];
 }
