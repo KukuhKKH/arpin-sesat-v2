@@ -41,6 +41,9 @@ class MaterialTransactionController extends Controller
             'type' => 'required',
             'amount' => 'required|numeric',
         ]);
+        $request->merge([
+            'invoice' => "INV-".date('ymdHis').rand(1000,9999)
+        ]);
         MaterialTransaction::create($request->all());
         $material = Material::find($request->material_id);
         $total = $material->total + $request->amount;

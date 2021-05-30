@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class MaterialTransaction extends Model
 {
     use HasFactory;
-    protected $fillable = ['supplier_id', 'material_id', 'price', 'amount', 'type', 'date'];
+    protected $fillable = ['supplier_id', 'material_id', 'invoice', 'price', 'amount', 'type', 'date'];
 
     public function material() {
         return $this->belongsTo(Material::class);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Master\OverheadController;
 use App\Http\Controllers\Admin\Master\SupplierController;
 use App\Http\Controllers\Admin\Master\TeamController;
 use App\Http\Controllers\Admin\Master\UserController;
+use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
 
 Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
@@ -29,6 +30,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
         Route::get('material/{type}/index', [MaterialTransactionController::class, 'index'])->name('material.index');
         Route::post('material', [MaterialTransactionController::class, 'store'])->name('material.store');
         Route::delete('material/{id}', [MaterialTransactionController::class, 'destroy'])->name('material.destroy');
+    });
+
+    Route::group(['prefix' => 'report', 'as' => 'report.'], function() {
+        Route::get('material', [ReportController::class, 'material_index'])->name('material.index');
+        Route::post('material', [ReportController::class, 'material_print'])->name('material.print');
     });
 
 });
