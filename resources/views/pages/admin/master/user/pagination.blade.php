@@ -2,17 +2,20 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Kode</th>
-            <th>Nama Bahan</th>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Username</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @forelse ($material as $value)
+        @forelse ($user as $value)
             <tr>
-                <td>{{ ($material->currentpage()-1) * $material->perpage() + $loop->index + 1 }}</td>
-                <td>{{ $value->code }}</td>
+                <td>{{ ($user->currentpage()-1) * $user->perpage() + $loop->index + 1 }}</td>
+                <td>{{ $value->getRoleNames()->first() }}</td>
                 <td>{{ $value->name }}</td>
+                <td>{{ $value->email }}</td>
+                <td>{{ $value->username }}</td>
                 <td>
                     <button type="button" class="btn-sm btn btn-success" onclick="editData({{ $value->id }})"><i class="pe-7s-pen"></i></button>
                     <button class="btn-sm btn btn-danger hapus" onclick="deleteData({{ $value->id }})" type="button"><i class="pe-7s-trash"></i></button>
@@ -26,4 +29,4 @@
     </tbody>
 </table>
 
-{{ $material->appends($data)->links() }}
+{{ $user->appends($data)->links() }}

@@ -122,7 +122,6 @@
                 .then(({data}) => {
                     let material = data.data
                     type = `PUT`
-                    $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
                     $(".modal-title").html(`Update Coa`)
                     $("#fieldId").val(material.id)

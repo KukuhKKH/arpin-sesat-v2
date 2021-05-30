@@ -127,7 +127,6 @@
                 .then(({data}) => {
                     let employee = data.data
                     type = `PUT`
-                    $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
                     $(".modal-title").html(`Update Pegawai`)
                     $("#fieldId").val(employee.id)

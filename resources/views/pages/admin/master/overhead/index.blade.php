@@ -130,7 +130,6 @@
                 .then(({data}) => {
                     let overhead = data.data
                     type = `PUT`
-                    $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
                     $(".modal-title").html(`Update Overhead ${jenis}`)
                     $("#fieldId").val(overhead.id)

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'api_token',
-        'status'
+        'status',
+        'username'
     ];
 
     /**
@@ -66,5 +68,9 @@ class User extends Authenticatable
 
     public function scopeFindToken($query, $api_token) {
         return $query->where('api_token', $api_token)->first();
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 }

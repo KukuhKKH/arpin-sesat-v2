@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Pemasok</button>
+                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah User</button>
                         </div>
                         <div>
 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="panel-body" id="table_data">
-                    @include('pages.admin.master.supplier.pagination')
+                    @include('pages.admin.master.user.pagination')
                 </div>
             </div>
         </div>
@@ -38,14 +38,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
+                                    <label for="">Role</label>
+                                    <select name="role" id="role" class="form-control">
+                                        <option value="" selected disabled>== Pilih Role ==</option>
+                                        @foreach ($roles as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Alamat</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Alamat">
+                                    <label for="">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -56,8 +61,23 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nomer Hp</label>
-                                    <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Nomer Hp">
+                                    <label for="">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center" id="textPassword">
+                                <p class="text-danger">Kosongkan password jika tidak ingin mengganti</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Konfirmasi Password</label>
+                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +100,7 @@
             loading('show', $("#modal-data"))
             if(type == 'POST') {
                 new Promise((resolve, reject) => {
-                    $axios.post(`{{ route('master.supplier.store') }}`, $("#form-data").serialize())
+                    $axios.post(`{{ route('master.user.store') }}`, $("#form-data").serialize())
                         .then(({data}) => {
                             if(data.status == false) {
                                 loading('hide', $("#modal-data"))
@@ -99,7 +119,7 @@
                 })
             } else if(type == "PUT") {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.supplier.update', ['supplier' => ':id']) }}`
+                    let url = `{{ route('master.user.update', ['user' => ':id']) }}`
                     url = url.replace(':id', $("#fieldId").val())
                     $axios.put(`${url}`, $("#form-data").serialize())
                         .then(({data}) => {
@@ -121,26 +141,28 @@
     const add = () => {
         type = `POST`
         $("#form-data")[0].reset()
+        $("#textPassword").hide()
         $("#btn-submit").html(`Simpan`)
-        $(".modal-title").html(`Tambah Pemasok`)
+        $(".modal-title").html(`Tambah User`)
         $("#modal-data").modal('show')
     }
 
     const editData = id => {
         new Promise((resolve, reject) => {
-            let url = `{{ route('master.supplier.edit', ['supplier' => ':id']) }}`
+            let url = `{{ route('master.user.edit', ['user' => ':id']) }}`
             url = url.replace(':id', id)
             $axios.get(`${url}`)
                 .then(({data}) => {
-                    let supplier = data.data
+                    let user = data.data
                     type = `PUT`
+                    $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
-                    $(".modal-title").html(`Update Tim`)
-                    $("#fieldId").val(supplier.id)
-                    $("#name").val(supplier.name)
-                    $("#address").val(supplier.address)
-                    $("#phone_number").val(supplier.phone_number)
-                    $("#email").val(supplier.email)
+                    $(".modal-title").html(`Update User`)
+                    $("#fieldId").val(user.id)
+                    $("#name").val(user.name)
+                    $("#role").val(user.roles[0].id)
+                    $("#email").val(user.email)
+                    $("#username").val(user.username)
                     $("#modal-data").modal('show')
                 })
         })
@@ -159,7 +181,7 @@
         .then(res => {
             if(res.isConfirmed) {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.supplier.destroy', ['supplier' => ':id']) }}`
+                    let url = `{{ route('master.user.destroy', ['user' => ':id']) }}`
                     url = url.replace(':id', id)
                     $axios.delete(`${url}`)
                         .then(({data}) => {

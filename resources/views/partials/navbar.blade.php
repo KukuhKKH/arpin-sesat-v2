@@ -21,6 +21,7 @@
                     <li class="{{ request()->segment(3) == 'team' ? 'active' : '' }}"><a href="{{ route('master.team.index') }}"> Tim</a></li>
                     <li class="{{ request()->segment(3) == 'employee' ? 'active' : '' }}"><a href="{{ route('master.employee.index') }}"> Pegawai</a></li>
                     <li class="{{ request()->segment(3) == 'supplier' ? 'active' : '' }}"><a href="{{ route('master.supplier.index') }}"> Pemasok</a></li>
+                    <li class="{{ request()->segment(3) == 'user' ? 'active' : '' }}"><a href="{{ route('master.user.index') }}"> User</a></li>
                 </ul>
             </li>
             <li>

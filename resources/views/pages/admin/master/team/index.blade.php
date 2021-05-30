@@ -128,7 +128,6 @@
                 .then(({data}) => {
                     let team = data.data
                     type = `PUT`
-                    $("#textPassword").show()
                     $("#btn-submit").html(`Update`)
                     $(".modal-title").html(`Update Tim`)
                     $("#fieldId").val(team.id)
