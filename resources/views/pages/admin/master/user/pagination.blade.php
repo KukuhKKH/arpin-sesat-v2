@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Role</th>
             <th>Nama</th>
             <th>Email</th>
             <th>Username</th>

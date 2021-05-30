@@ -24,12 +24,13 @@
                     <li class="{{ request()->segment(3) == 'user' ? 'active' : '' }}"><a href="{{ route('master.user.index') }}"> User</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#transaction" data-toggle="collapse" aria-expanded="false">
+            <li class="{{ request()->segment(2) == 'transaction' ? 'active' : '' }}">
+                <a href="#transaction" data-toggle="collapse" aria-expanded="{{ request()->segment(2) == 'transaction' ? 'true' : 'false' }}">
                     Transaksi<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                 </a>
-                <ul id="transaction" class="nav nav-second collapse">
-
+                <ul id="transaction" class="nav nav-second collapse {{ request()->segment(2) == 'transaction' ? 'show' : '' }}"">
+                    <li class="{{ request()->segment(4) == 1 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 1) }}"> Bahan Baku</a></li>
+                    <li class="{{ request()->segment(4) == 2 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 2) }}"> Bahan Penolong</a></li>
                 </ul>
             </li>
             <li>
