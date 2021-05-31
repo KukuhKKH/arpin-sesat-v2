@@ -9,9 +9,9 @@
         </tr>
     </thead>
     <tbody>
-        @forelse ($material as $value)
+        @forelse ($product as $value)
             <tr>
-                <td>{{ ($material->currentpage()-1) * $material->perpage() + $loop->index + 1 }}</td>
+                <td>{{ ($product->currentpage()-1) * $product->perpage() + $loop->index + 1 }}</td>
                 <td>{{ $value->code }}</td>
                 <td>{{ $value->name }}</td>
                 <td>{{ $value->total }}</td>
@@ -22,10 +22,10 @@
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">Tidak ada data</td>
+                <td colspan="5" class="text-center">Tidak ada data</td>
             </tr>
         @endforelse
     </tbody>
 </table>
 
-{{ $material->appends($data)->links() }}
+{{ $product->appends($data)->links() }}

@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="panel-body" id="table_data">
-                    <form action="{{ route('report.material.print') }}" method="POST">
+                    <form action="{{ route('report.material.print', $type) }}" method="POST">
                         @csrf
                         <div class="form-group row">
                             <div class="col">

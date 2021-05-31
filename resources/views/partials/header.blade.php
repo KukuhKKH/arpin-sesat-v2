@@ -22,6 +22,13 @@
             <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
         </form>
         <ul class="nav navbar-nav">
+            @role('admin')
+            <li class="nav-item uppercase-link">
+                <a href="versions.html" class="nav-link">Permintaan Bahan
+                    <span class="label label-warning pull-right">{{ Permintaan::where('status', 1)->count() }}</span>
+                </a>
+            </li>
+            @endrole
             <li class="nav-item profil-link">
                 <a href="login.html">
                     <span class="profile-address">arpin@sesat.io</span>

@@ -103,7 +103,7 @@
                 "showEasing": "swing",
                 "timeOut": "6000"
             };
-            toastr.warning('<strong>Welcome to mobile legend</small>');
+            toastr.success('<strong>Welcome to mobile legend</small>');
         }, 1600)
         @endif
 
@@ -163,9 +163,9 @@
                     teks_error += `<p>${e}</>`
                 }
             })
-            toastr.error("Oops...", teks_error)
+            toastr.error(teks_error)
         } else {
-            toastr.error(err.message.head, err.message.body)
+            toastr.error(err.response.data.message.body, err.response.data.message.head)
         }
     }
 </script>

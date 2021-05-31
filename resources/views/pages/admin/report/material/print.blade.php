@@ -14,7 +14,7 @@
         <center>UD LANGGENG GIPSUM PONOROGO</center>
     </h1>
     <h3>
-        <center>LAPORAN PEMBELIAN</center>
+        <center>LAPORAN PEMBELIAN BAHAN {{ $type == 1 ? 'BAKU' : 'PENOLONG' }}</center>
     </h3>
     <p>
         <center>{{ date('D d F Y') }}</center>
