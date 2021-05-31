@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Master\UserController;
 use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\Admin\Transaction\MaterialOutController;
 use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
+use App\Http\Controllers\Admin\Transaction\ProductTransactionController;
 
 Route::group(['prefix' => 'admin', 'middleware' => 'role:admin|produksi'], function() {
     Route::get('/', [HomeController::class, 'index'])->name('admin.index');
@@ -37,10 +38,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin|produksi'], funct
         Route::get('material-out/{type}/index', [MaterialOutController::class, 'index'])->name('material-out.index');
         Route::resource('material-out', MaterialOutController::class)->except('index');
 
-        
+        Route::get('product', [ProductTransactionController::class, 'index'])->name('product.index');
+        Route::get('product/create', [ProductTransactionController::class, 'create'])->name('product.create');
+        Route::post('product', [ProductTransactionController::class, 'store'])->name('product.store');
     });
 
-    Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'admin'], function() {
+    Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'role:admin'], function() {
         Route::get('material/{type}', [ReportController::class, 'material_index'])->name('material.index');
         Route::post('material/{type}', [ReportController::class, 'material_print'])->name('material.print');
     });

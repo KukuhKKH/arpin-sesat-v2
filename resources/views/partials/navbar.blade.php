@@ -35,11 +35,14 @@
                 </a>
                 <ul id="transaction" class="nav nav-second collapse {{ request()->segment(2) == 'transaction' ? 'show' : '' }}">
                     @role('admin')
-                    <li class="{{ request()->segment(3) == 'transaction' && request()->segment(4) == 1 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 1) }}"> Bahan Baku</a></li>
-                    <li class="{{ request()->segment(3) == 'transaction' && request()->segment(4) == 2 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 2) }}"> Bahan Penolong</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 1 && request()->segment(3) == 'material' ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 1) }}"> Bahan Baku</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 2 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 2) }}"> Bahan Penolong</a></li>
                     @endrole
-                    <li class="{{ request()->segment(3) == 'transaction' && request()->segment(4) == 1 ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 1) }}"> Permintaan Bahan Baku</a></li>
-                    <li class="{{ request()->segment(3) == 'transaction' && request()->segment(4) == 2 ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 2) }}"> Permintaan Bahan Penolong</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 1 && request()->segment(3) == 'material-out' ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 1) }}"> Permintaan Bahan Baku</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 2 && request()->segment(3) == 'material-out' ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 2) }}"> Permintaan Bahan Penolong</a></li>
+                    @role('produksi')
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(3) == 'product' ? 'active' : '' }}"><a href="{{ route('transaction.product.index') }}"> Produksi</a></li>
+                    @endrole
                 </ul>
             </li>
             @role('admin')
@@ -50,7 +53,6 @@
                 <ul id="report" class="nav nav-second collapse {{ request()->segment(2) == 'report' ? 'show' : '' }}">
                     <li class="{{ request()->segment(4) == 1 && request()->segment(3) == 'material' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.material.index', 1) }}"> Bahan Baku</a></li>
                     <li class="{{ request()->segment(4) == 2 && request()->segment(3) == 'material' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.material.index', 2) }}"> Bahan Penolong</a></li>
-                    <li><a href=""> Produksi</a></li>
                 </ul>
             </li>
             @endrole
