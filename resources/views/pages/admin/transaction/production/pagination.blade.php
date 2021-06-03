@@ -8,6 +8,7 @@
             <th>Jumlah</th>
             <th>Total Harga</th>
             <th>Total Produksi</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -34,10 +35,18 @@
                     $subtotal = $price_team + $price_material + $price_overhead;
                 @endphp
                 <td>Rp. {{ number_format($subtotal) }}</td>
+                <td>
+                    <form action="{{ route('transaction.product.destroy', $value->id) }}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <a href="{{ route('transaction.product.show', $value->id) }}" class="btn btn-sm btn-success">Detail</a>
+                        <button type="submit" class="btn btn-sm btn-danger">DELETE</button>
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
-                <td colspan="6" class="text-center">Tidak ada data</td>
+                <td colspan="8" class="text-center">Tidak ada data</td>
             </tr>
         @endforelse
     </tbody>

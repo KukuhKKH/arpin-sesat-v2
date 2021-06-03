@@ -39,8 +39,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin|produksi'], funct
         Route::resource('material-out', MaterialOutController::class)->except('index');
 
         Route::get('product', [ProductTransactionController::class, 'index'])->name('product.index');
+        Route::get('product/{id}', [ProductTransactionController::class, 'show'])->name('product.show');
         Route::get('product/create', [ProductTransactionController::class, 'create'])->name('product.create');
         Route::post('product', [ProductTransactionController::class, 'store'])->name('product.store');
+        Route::delete('product/{id}', [ProductTransactionController::class, 'destroy'])->name('product.destroy');
     });
 
     Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'role:admin'], function() {

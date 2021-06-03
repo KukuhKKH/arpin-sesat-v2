@@ -30,6 +30,15 @@ class ProductTransactionController extends Controller
         return view('pages.admin.transaction.production.index', compact('data', 'title', 'production'));
     }
 
+    public function show($id) {
+        $productTransaction = ProductTransaction::find($id);
+        $title = [
+            'page_name' => "Halaman Produksi",
+            'page_description' => 'Manage Produksi'
+        ];
+        return view('pages.admin.transaction.production.show', compact('productTransaction', 'title'));
+    }
+
     public function create() {
         $product = Product::all();
         $material_raw = Material::where('type', 1)->get();
@@ -83,5 +92,15 @@ class ProductTransactionController extends Controller
             dd($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function destroy($id) {
+        $productTransaction = ProductTransaction::find($id);
+        $productTransactionMaterial = ProductTransactionMaterial::where('product_transactions_id', $productTransaction->id);
+        $productTransactionOverhead = ProductTransactionOverhead::where('product_transactions_id', $productTransaction->id);
+        $productTransactionMaterial->delete();
+        $productTransactionOverhead->delete();
+        $productTransaction->delete();
+        return redirect()->back()->with('success', 'Berhasil');
     }
 }
