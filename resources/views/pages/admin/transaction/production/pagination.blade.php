@@ -7,6 +7,7 @@
             <th>Harga</th>
             <th>Jumlah</th>
             <th>Total Harga</th>
+            <th>Total Produksi</th>
         </tr>
     </thead>
     <tbody>
@@ -15,9 +16,24 @@
                 <td>{{ ($production->currentpage()-1) * $production->perpage() + $loop->index + 1 }}</td>
                 <td>{{ date('d F Y', strtotime($value->date)) }}</td>
                 <td>{{ $value->product->name }}</td>
-                <td>{{ $value->product->price }}</td>
+                <td>Rp. {{ number_format($value->product->price) }}</td>
                 <td>{{ $value->amount }}</td>
-                <td>{{ $value->product->price * $value->amount }}</td>
+                <td>Rp. {{ number_format(($value->product->price * $value->amount)) }}</td>
+                @php
+                    $price_team = $value->team->salary;
+                    $price_material = 0;
+                    $price_overhead = 0;
+                    foreach ($value->transaction_material as $key => $v) {
+                        $total = $v->material->price * $v->amount;
+                        $price_material += $total;
+                    }
+
+                    foreach ($value->transaction_overhead as $key => $v) {
+                        $price_overhead += $v->overhead->price;
+                    }
+                    $subtotal = $price_team + $price_material + $price_overhead;
+                @endphp
+                <td>Rp. {{ number_format($subtotal) }}</td>
             </tr>
         @empty
             <tr>

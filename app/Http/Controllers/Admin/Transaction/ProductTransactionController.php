@@ -18,7 +18,8 @@ class ProductTransactionController extends Controller
     public function index(Request $request) {
         $data = $request->all();
         $query = ProductTransaction::query();
-        $production = $query->with(['product', 'team'])->paginate(10);
+        // dd($query->first());
+        $production = $query->paginate(10);
         $title = [
             'page_name' => "Halaman Produksi",
             'page_description' => 'Manage Produksi'

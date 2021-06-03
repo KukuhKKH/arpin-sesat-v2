@@ -11,6 +11,7 @@ class ProductTransaction extends Model
 {
     use HasFactory;
     protected $fillable = ['product_id', 'team_id', 'date', 'amount'];
+    protected $with = ['transaction_material', 'transaction_overhead'];
 
     public function product() {
         return $this->belongsTo(Product::class);
@@ -18,5 +19,13 @@ class ProductTransaction extends Model
 
     public function team() {
         return $this->belongsTo(Team::class);
+    }
+
+    public function transaction_material() {
+        return $this->hasMany(ProductTransactionMaterial::class, 'product_transactions_id');
+    }
+
+    public function transaction_overhead() {
+        return $this->hasMany(ProductTransactionOverhead::class, 'product_transactions_id');
     }
 }
