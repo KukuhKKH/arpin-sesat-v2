@@ -8,14 +8,17 @@ use App\Models\Master\Overhead;
 use App\Models\Master\Product;
 use App\Models\Master\Team;
 use App\Models\Transaction\ProductTransaction;
+use App\Models\Transaction\ProductTransactionMaterial;
+use App\Models\Transaction\ProductTransactionOverhead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductTransactionController extends Controller
 {
     public function index(Request $request) {
         $data = $request->all();
         $query = ProductTransaction::query();
-        $production = $query->paginate(10);
+        $production = $query->with(['product', 'team'])->paginate(10);
         $title = [
             'page_name' => "Halaman Produksi",
             'page_description' => 'Manage Produksi'
@@ -41,6 +44,43 @@ class ProductTransactionController extends Controller
     }
 
     public function store(Request $request) {
-        dd($request->all());
+        DB::beginTransaction();
+        try {
+            $productTransaction = ProductTransaction::create($request->all());
+            foreach ($request->material_raw as $key => $value) {
+                ProductTransactionMaterial::create([
+                    'product_transactions_id' => $productTransaction->id,
+                    'material_id' => $value,
+                    'amount' => $request->material_raw_amount[$key]
+                ]);
+            }
+            foreach ($request->material_help as $key => $value) {
+                ProductTransactionMaterial::create([
+                    'product_transactions_id' => $productTransaction->id,
+                    'material_id' => $value,
+                    'amount' => $request->material_help_amount[$key]
+                ]);
+            }
+
+            foreach ($request->overhead_fix as $key => $value) {
+                ProductTransactionOverhead::create([
+                    'product_transactions_id' => $productTransaction->id,
+                    'overhead_id' => $value,
+                ]);
+            }
+
+            foreach ($request->overhead_var as $key => $value) {
+                ProductTransactionOverhead::create([
+                    'product_transactions_id' => $productTransaction->id,
+                    'overhead_id' => $value,
+                ]);
+            }
+            DB::commit();
+            return redirect()->route('master.product.index')->with('success', 'Berhasil');
+        } catch(\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

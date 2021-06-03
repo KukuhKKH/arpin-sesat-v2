@@ -11,11 +11,11 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Tanggal Produksi</label>
-                        <input type="text" class="form-control" id="date" name="date" placeholder="Tanggal" data-date-format="mm/dd/yyyy">
+                        <input type="text" class="form-control" id="date" name="date" placeholder="Tanggal" data-date-format="mm/dd/yyyy" required>
                     </div>
                     <div class="form-group">
                         <label for="">Produk</label>
-                        <select name="product" id="product" class="form-control">
+                        <select name="product_id" id="product" class="form-control" required>
                             <option value="" selected disabled>== Pilih Produk ==</option>
                             @foreach ($product as $value)
                                 <option value="{{ $value->id }}" data-price="{{ $value->price }}">{{ $value->name }}</option>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Total Produksi</label>
-                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Total Produksi">
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Total Produksi" required>
                     </div>
                     <div class="form-group">
                         <div class="d-flex justify-content-between">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <select name="material_raw[]" id="material_raw_1" class="form-control">
+                                <select name="material_raw[]" id="material_raw_1" data-id="1" class="form-control select-material-raw" autocomplete="off" required>
                                     <option value="" selected disabled>== Pilih Bahan Baku ==</option>
                                     @foreach ($material_raw as $value)
                                         <option value="{{ $value->id }}" data-price="{{ $value->price }}">{{ $value->code . " - " . $value->name }}</option>
@@ -49,10 +49,10 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <input type="number" name="material_raw_amount[]" class="form-control type" data-id="1" placeholder="Total">
+                                <input type="number" name="material_raw_amount[]" id="material_raw_amount_1" class="form-control type" data-id="1" placeholder="Total" readonly required>
                             </div>
                             <div class="col-md-4">
-                                <input type="number" name="material_raw_total[]" class="form-control" id="material_raw_total_1" placeholder="Harga Total"readonly>
+                                <input type="number" name="material_raw_total[]" class="form-control" id="material_raw_total_1" placeholder="Harga Total" readonly>
                             </div>
                         </div>
                         <div id="fieldMateialRaw"></div>
@@ -63,20 +63,20 @@
                                 <label for="">Bahan Penolong</label>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-sm btn-secondary" id="btnAddMaterialRaw"><i class="pe-7s-plus"></i> Tambah Bahan Baku</button>
+                                <button type="button" class="btn btn-sm btn-secondary" id="btnAddMaterialHelp"><i class="pe-7s-plus"></i> Tambah Bahan Penolong</button>
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <select name="material_help[]" id="material_help_1" class="form-control">
+                                <select name="material_help[]" id="material_help_1" data-id="1" class="form-control select-material-help" autocomplete="off" required>
                                     <option value="" selected disabled>== Pilih Bahan Penolong ==</option>
                                         @foreach ($material_help as $value)
-                                    <option value="{{ $value->id }}" data-price="{{ $value->price }}">{{ $value->code . " - " . $value->name }}</option>
-                                @endforeach
+                                            <option value="{{ $value->id }}" data-price="{{ $value->price }}">{{ $value->code . " - " . $value->name }}</option>
+                                        @endforeach
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <input type="number" name="material_help_amount[]" class="form-control type_help" data-id="1" placeholder="Total">
+                                <input type="number" name="material_help_amount[]" id="material_help_amount_1" class="form-control type_help" data-id="1" placeholder="Total" readonly required>
                             </div>
                             <div class="col-md-4">
                                 <input type="number" name="material_help_total[]" class="form-control" id="material_help_total_1" placeholder="Harga Total"readonly>
@@ -93,7 +93,7 @@
                                 <button type="button" class="btn btn-sm btn-secondary" id="btnAddOverheadFix"><i class="pe-7s-plus"></i> Tambah Overhead Tetap</button>
                             </div>
                         </div>
-                        <select name="overhead_fix[]" class="form-control mt-1">
+                        <select name="overhead_fix[]" class="form-control mt-1" required>
                             <option value="" selected disabled>== Pilih Overhead Tetap ==</option>
                             @foreach ($overhead_fix as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }} - {{ $value->price }}</option>
@@ -110,7 +110,7 @@
                                 <button type="button" class="btn btn-sm btn-secondary" id="btnAddOverheadVar"><i class="pe-7s-plus"></i> Tambah Overhead Variabel</button>
                             </div>
                         </div>
-                        <select name="overhead_var[]" class="form-control mt-1">
+                        <select name="overhead_var[]" class="form-control mt-1" required>
                             <option value="" selected disabled>== Pilih Overhead Variabel ==</option>
                             @foreach ($overhead_var as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }} - {{ $value->price }}</option>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Tim</label>
-                        <select name="team" id="team" class="form-control">
+                        <select name="team_id" id="team" class="form-control" required>
                             <option value="" disabled selected>== Pilih Tenaga Kerja ==</option>
                             @foreach ($team as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }} - {{ $value->salary }}</option>
@@ -147,6 +147,7 @@
 <script>
     let material_raw = `{!! json_encode($material_raw) !!}`
     let material_raw_count = 1
+    let material_help_count = 1
     let material_help = `{!! json_encode($material_help) !!}`
     let overhead_fix = `{!! json_encode($overhead_fix) !!}`
     let overhead_var = `{!! json_encode($overhead_var) !!}`
@@ -161,22 +162,22 @@
         $("#btnAddMaterialRaw").on('click', () => {
             let data = JSON.parse(material_raw)
             material_raw_count++
-            let html = `<div class="row mt-2"> <div class="col-md-4"> <select name="material_raw[]" id="material_raw_${material_raw_count}" class="form-control"> <option value="" selected disabled>== Pilih Bahan Baku ==</option>`
+            let html = `<div class="row mt-2"> <div class="col-md-4"> <select name="material_raw[]" id="material_raw_${material_raw_count}" class="form-control select-material-raw" data-id="${material_raw_count}"> <option value="" selected disabled>== Pilih Bahan Baku ==</option>`
             data.forEach(el => {
                 html += `<option value="${el.id}" data-price="${el.price}">${el.code} - ${el.name}</option>`
             })
-            html += `</select> </div> <div class="col-md-4"> <input type="number" name="material_raw_amount[]" class="form-control type" data-id="${material_raw_count}" placeholder="Total"> </div> <div class="col-md-4"> <input type="number" name="material_raw_total[]" class="form-control" id="material_raw_total_${material_raw_count}" placeholder="Harga Total"readonly> </div> </div>`
+            html += `</select> </div> <div class="col-md-4"> <input type="number" name="material_raw_amount[]" class="form-control type" data-id="${material_raw_count}" id="material_raw_amount_${material_raw_count}" placeholder="Total" readonly> </div> <div class="col-md-4"> <input type="number" name="material_raw_total[]" class="form-control" id="material_raw_total_${material_raw_count}" placeholder="Harga Total"readonly> </div> </div>`
             $("#fieldMateialRaw").append(html)
         })
 
         $("#btnAddMaterialHelp").on('click', () => {
             let data = JSON.parse(material_help)
             material_help_count++
-            let html = `<div class="row mt-2"> <div class="col-md-4"> <select name="material_help[]" id="material_help_${material_help_count}" class="form-control"> <option value="" selected disabled>== Pilih Bahan Penolong ==</option>`
+            let html = `<div class="row mt-2"> <div class="col-md-4"> <select name="material_help[]" id="material_help_${material_help_count}" class="form-control select-material-help" data-id="${material_help_count}"> <option value="" selected disabled>== Pilih Bahan Penolong ==</option>`
             data.forEach(el => {
                 html += `<option value="${el.id}" data-price="${el.price}">${el.code} - ${el.name}</option>`
             })
-            html += `</select> </div> <div class="col-md-4"> <input type="number" name="material_help_amount[]" class="form-control type" data-id="${material_help_count}" placeholder="Total"> </div> <div class="col-md-4"> <input type="number" name="material_help_total[]" class="form-control" id="material_help_total_${material_help_count}" placeholder="Harga Total"readonly> </div> </div>`
+            html += `</select> </div> <div class="col-md-4"> <input type="number" name="material_help_amount[]" class="form-control type_help" data-id="${material_help_count}" id="material_help_amount_${material_help_count}" placeholder="Total" readonly> </div> <div class="col-md-4"> <input type="number" name="material_help_total[]" class="form-control" id="material_help_total_${material_help_count}" placeholder="Harga Total"readonly> </div> </div>`
             $("#fieldMateialHelp").append(html)
         })
 
@@ -200,6 +201,18 @@
             $("#fieldOverheadVar").append(html)
         })
 
+    })
+
+    $(document).on('change', '.select-material-raw', e => {
+        let comp = $(e.currentTarget).val()
+        let id = $(e.currentTarget).data('id')
+        $(`#material_raw_amount_${id}`).attr("readonly", false)
+    })
+
+    $(document).on('change', '.select-material-help', e => {
+        let comp = $(e.currentTarget).val()
+        let id = $(e.currentTarget).data('id')
+        $(`#material_help_amount_${id}`).attr("readonly", false)
     })
 
     $(document).on('change', '.type', e => {
