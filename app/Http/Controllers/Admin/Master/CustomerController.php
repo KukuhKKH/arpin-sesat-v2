@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Master;
 
+use Illuminate\Http\Request;
+use App\Models\Master\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Master\EmployeeCreateRequest;
 use App\Http\Requests\Master\EmployeeUpdateRequest;
-use App\Models\Master\Employee;
-use App\Models\Master\Team;
-use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,17 +18,16 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $query = Employee::query();
-        $team = Team::all();
-        $employee = $query->with('team')->paginate(10);
+        $query = Customer::query();
+        $customer = $query->paginate(10);
         $title = [
-            'page_name' => "Halaman Data Tenaga Kerja",
-            'page_description' => 'Manage Data Tenaga Kerja'
+            'page_name' => "Halaman Data Pelanggan",
+            'page_description' => 'Manage Data Pelanggan'
         ];
         if($request->ajax()) {
-            return view("pages.admin.master.employee.pagination",compact('data', 'employee'))->render();
+            return view("pages.admin.master.customer.pagination",compact('data', 'customer'))->render();
         }
-        return view('pages.admin.master.employee.index', compact('data', 'employee', 'title', 'team'));
+        return view('pages.admin.master.customer.index', compact('data', 'customer', 'title'));
     }
 
     /**
@@ -40,12 +38,12 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeCreateRequest $request)
     {
-        Employee::create($request->all());
+        Customer::create($request->all());
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil menambahkan data tim'
+                'body' => 'Berhasil menambahkan data pelanggan'
             ]
         ], 200);
     }
@@ -60,7 +58,7 @@ class EmployeeController extends Controller
     {
         return response()->json([
             'status' => true,
-            'data' => Employee::find($id)
+            'data' => Customer::find($id)
         ], 200);
     }
 
@@ -73,13 +71,13 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeUpdateRequest $request, $id)
     {
-        $pegawai = Employee::find($id);
-        $pegawai->update($request->all());
+        $pelanggan = Customer::find($id);
+        $pelanggan->update($request->all());
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil update pegawai'
+                'body' => 'Berhasil update pelanggan'
             ]
         ], 200);
     }
@@ -92,13 +90,13 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $pegawai = Employee::find($id);
-        $pegawai->delete();
+        $pelanggan = Customer::find($id);
+        $pelanggan->delete();
         return response()->json([
             'status' => true,
             'message' => [
                 'head' => 'Berhasil',
-                'body' => 'Berhasil hapus pegawai'
+                'body' => 'Berhasil hapus pelanggan'
             ]
         ], 200);
     }

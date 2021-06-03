@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Master\CoaController;
+use App\Http\Controllers\Admin\Master\CustomerController;
 use App\Http\Controllers\Admin\Master\EmployeeController;
 use App\Http\Controllers\Admin\Master\MaterialController;
 use App\Http\Controllers\Admin\Master\OverheadController;
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin|produksi'], funct
         Route::resource('supplier', SupplierController::class)->except(['show', 'create']);
         Route::resource('user', UserController::class)->except(['show', 'create'])->middleware('role:admin');
         Route::resource('product', ProductController::class)->except(['show', 'create']);
+        Route::resource('customer', CustomerController::class)->except(['show', 'create']);
     });
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function() {

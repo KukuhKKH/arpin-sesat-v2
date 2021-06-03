@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Tenaga Kerja</button>
+                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Pelanggan</button>
                         </div>
                         <div>
 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="panel-body" id="table_data">
-                    @include('pages.admin.master.employee.pagination')
+                    @include('pages.admin.master.customer.pagination')
                 </div>
             </div>
         </div>
@@ -38,19 +38,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nama Tim</label>
-                                    <select name="team_id" id="team_id" class="form-control">
-                                        <option value="" selected disabled>== Pilih Tim ==</option>
-                                        @foreach ($team as $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
+                                    <label for="">Alamat</label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Alamat">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Nomer Hp</label>
+                                    <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Nomer Hp">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +80,7 @@
             loading('show', $("#modal-data"))
             if(type == 'POST') {
                 new Promise((resolve, reject) => {
-                    $axios.post(`{{ route('master.employee.store') }}`, $("#form-data").serialize())
+                    $axios.post(`{{ route('master.customer.store') }}`, $("#form-data").serialize())
                         .then(({data}) => {
                             if(data.status == false) {
                                 loading('hide', $("#modal-data"))
@@ -92,7 +99,7 @@
                 })
             } else if(type == "PUT") {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.employee.update', ['employee' => ':id']) }}`
+                    let url = `{{ route('master.customer.update', ['customer' => ':id']) }}`
                     url = url.replace(':id', $("#fieldId").val())
                     $axios.put(`${url}`, $("#form-data").serialize())
                         .then(({data}) => {
@@ -115,23 +122,25 @@
         type = `POST`
         $("#form-data")[0].reset()
         $("#btn-submit").html(`Simpan`)
-        $(".modal-title").html(`Tambah Pegawai`)
+        $(".modal-title").html(`Tambah Pelanggan`)
         $("#modal-data").modal('show')
     }
 
     const editData = id => {
         new Promise((resolve, reject) => {
-            let url = `{{ route('master.employee.edit', ['employee' => ':id']) }}`
+            let url = `{{ route('master.customer.edit', ['customer' => ':id']) }}`
             url = url.replace(':id', id)
             $axios.get(`${url}`)
                 .then(({data}) => {
-                    let employee = data.data
+                    let customer = data.data
                     type = `PUT`
                     $("#btn-submit").html(`Update`)
-                    $(".modal-title").html(`Update Pegawai`)
-                    $("#fieldId").val(employee.id)
-                    $("#name").val(employee.name)
-                    $("#team_id").val(employee.team_id)
+                    $(".modal-title").html(`Update Pelanggan`)
+                    $("#fieldId").val(customer.id)
+                    $("#name").val(customer.name)
+                    $("#address").val(customer.address)
+                    $("#phone_number").val(customer.phone_number)
+                    $("#email").val(customer.email)
                     $("#modal-data").modal('show')
                 })
         })
@@ -150,7 +159,7 @@
         .then(res => {
             if(res.isConfirmed) {
                 new Promise((resolve, reject) => {
-                    let url = `{{ route('master.employee.destroy', ['employee' => ':id']) }}`
+                    let url = `{{ route('master.customer.destroy', ['customer' => ':id']) }}`
                     url = url.replace(':id', id)
                     $axios.delete(`${url}`)
                         .then(({data}) => {

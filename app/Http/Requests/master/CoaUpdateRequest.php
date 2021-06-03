@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\master;
 
+use App\Models\Master\Coa;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CoaUpdateRequest extends FormRequest
 {
@@ -23,8 +25,9 @@ class CoaUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $code = Coa::find(request()->segment(4));
         return [
-            'code' => 'required|unique:m_coa,code,id,'.request()->id,
+            'code' => ['required', Rule::unique(Coa::class)->ignore($code->id, 'id')],
             'name' => 'required'
         ];
     }
