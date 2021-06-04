@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\Master\Material;
 use App\Models\Transaction\MaterialTransaction;
 use Illuminate\Http\Request;
 
@@ -28,5 +29,26 @@ class ReportController extends Controller
             $q->where('type', $type);
         })->whereBetween('date', [$request->date_start, $request->date_end])->orderBy('date', 'ASC')->get();
         return view('pages.admin.report.material.print', compact('material', 'type'));
+    }
+
+    public function stock_material($type) {
+        if($type == 1) {
+            $title = [
+                'page_name' => "Halaman Laporan Bahan Stok Baku",
+                'page_description' => 'Manage Laporan Bahan Stok Baku'
+            ];
+        } else {
+            $title = [
+                'page_name' => "Halaman Laporan Bahan Stok Penolong",
+                'page_description' => 'Manage Laporan Bahan Stok Penolong'
+            ];
+        }
+        $material = Material::where('type', $type)->get();
+        return view('pages.admin.report.stock.material', compact('material', 'title'));
+    }
+
+    public function stock_material_post($id) {
+        $material = Material::find($id);
+        return view('pages.admin.report.stock.table', compact('material'))->render();
     }
 }
