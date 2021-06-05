@@ -8,6 +8,7 @@
                 <a href="{{ url('/') }}">Dashboard</a>
             </li>
 
+            @hasanyrole('produksi|admin')
             <li class="{{ request()->segment(2) == 'master' ? 'active' : '' }}">
                 <a href="#master" data-toggle="collapse" aria-expanded="{{ request()->segment(2) == 'master' ? 'true' : 'false' }}">
                     Master Data<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
@@ -30,6 +31,8 @@
                     @endrole
                 </ul>
             </li>
+            @endhasanyrole
+            @hasanyrole('produksi|admin')
             <li class="{{ request()->segment(2) == 'transaction' ? 'active' : '' }}">
                 <a href="#transaction" data-toggle="collapse" aria-expanded="{{ request()->segment(2) == 'transaction' ? 'true' : 'false' }}">
                     Transaksi<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
@@ -47,7 +50,8 @@
                     @endrole
                 </ul>
             </li>
-            @role('admin')
+            @endhasanyrole
+            @hasanyrole('admin|pemilik')
             <li class="{{ request()->segment(2) == 'report' ? 'active' : '' }}">
                 <a href="#report" data-toggle="collapse" aria-expanded="{{ request()->segment(2) == 'report' ? 'true' : 'false' }}">
                     Laporan<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
@@ -63,7 +67,7 @@
                     <li class=""><a href=""> Harga Pokok Produksi</a></li>
                 </ul>
             </li>
-            @endrole
+            @endhasanyrole
             <li class="nav-info">
                 <i class="pe pe-7s-shield text-accent"></i>
 

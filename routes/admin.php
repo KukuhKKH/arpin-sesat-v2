@@ -15,11 +15,10 @@ use App\Http\Controllers\Admin\Transaction\MaterialOutController;
 use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
 use App\Http\Controllers\Admin\Transaction\ProductTransactionController;
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|produksi']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 
-    Route::group(['prefix' => 'master', 'as' => 'master.'], function() {
-        Route::resource('coa', CoaController::class)->except(['show', 'create'])->middleware('role:admin');
+    Route::group(['prefix' => 'master', 'as' => 'master.', 'middleware' => 'role:produksi|admin'], function() {
         Route::get('material/{type}/index', [MaterialController::class, 'index'])->name('material.index');
         Route::resource('material', MaterialController::class)->except(['show', 'create', 'index']);
         Route::get('overhead/{type}/index', [OverheadController::class, 'index'])->name('overhead.index');
@@ -27,12 +26,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|produksi
         Route::resource('team', TeamController::class)->except(['show', 'create']);
         Route::resource('employee', EmployeeController::class)->except(['show', 'create']);
         Route::resource('supplier', SupplierController::class)->except(['show', 'create']);
-        Route::resource('user', UserController::class)->except(['show', 'create'])->middleware('role:admin');
         Route::resource('product', ProductController::class)->except(['show', 'create']);
         Route::resource('customer', CustomerController::class)->except(['show', 'create']);
+        Route::group(['middleware' => 'role:admin'], function() {
+            Route::resource('coa', CoaController::class)->except(['show', 'create'])->middleware('role:admin');
+            Route::resource('user', UserController::class)->except(['show', 'create'])->middleware('role:admin');
+        });
     });
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function() {
+        Route::group(['middleware' => 'role:admin'], function() {
+
+        });
+        Route::group(['middleware' => 'role:produksi'], function() {
+
+        });
         Route::get('material/{type}/index', [MaterialTransactionController::class, 'index'])->name('material.index');
         Route::post('material', [MaterialTransactionController::class, 'store'])->name('material.store');
         Route::delete('material/{id}', [MaterialTransactionController::class, 'destroy'])->name('material.destroy');
@@ -47,7 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin|produksi
         Route::delete('product/{id}', [ProductTransactionController::class, 'destroy'])->name('product.destroy');
     });
 
-    Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'role:admin'], function() {
+    Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'role:admin|pemilik'], function() {
         Route::get('material/{type}', [ReportController::class, 'material_index'])->name('material.index');
         Route::post('material/{type}', [ReportController::class, 'material_print'])->name('material.print');
         Route::get('stock/material/{type}', [ReportController::class, 'stock_material'])->name('stock.material');
