@@ -41,7 +41,7 @@
                     @role('admin')
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 1 && request()->segment(3) == 'material' ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 1) }}"> Pembelian Bahan Baku</a></li>
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 2 ? 'active' : '' }}"><a href="{{ route('transaction.material.index', 2) }}"> Pembelian Bahan Penolong</a></li>
-                    <li class=""><a href=""> Penjualan Produk Jadi</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(3) == 'selling' ? 'active' : '' }}"><a href="{{ route('transaction.selling.index') }}"> Penjualan Produk Jadi</a></li>
                     @endrole
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 1 && request()->segment(3) == 'material-out' ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 1) }}"> Permintaan Bahan Baku</a></li>
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 2 && request()->segment(3) == 'material-out' ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 2) }}"> Permintaan Bahan Penolong</a></li>
@@ -61,7 +61,7 @@
                     <li class="{{ request()->segment(4) == 2 && request()->segment(3) == 'material' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.material.index', 2) }}"> Pembelian Bahan Penolong</a></li>
                     <li class=""><a href="{{ route('report.stock.material', 1) }}"> Persediaan Bahan Baku</a></li>
                     <li class=""><a href="{{ route('report.stock.material', 2) }}"> Persediaan Bahan Penolong</a></li>
-                    <li class=""><a href=""> Persediaan Produk Jadi</a></li>
+                    <li class=""><a href="{{ route('report.selling.index') }}"> Persediaan Produk Jadi</a></li>
                     <li class=""><a href=""> Jurnal Umum</a></li>
                     <li class=""><a href=""> Buku Besar</a></li>
                     <li class=""><a href=""> Harga Pokok Produksi</a></li>

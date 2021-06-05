@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Material;
 use App\Models\Transaction\MaterialTransaction;
+use App\Models\Transaction\ProductSelling;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -50,5 +51,18 @@ class ReportController extends Controller
     public function stock_material_post($id) {
         $material = Material::find($id);
         return view('pages.admin.report.stock.table', compact('material'))->render();
+    }
+
+    public function product_selling() {
+        $title = [
+            'page_name' => "Halaman Data Penjualan Produk",
+            'page_description' => 'Manage Data Penjualan Produk'
+        ];
+        return view('pages.admin.report.selling.index', compact( 'title'));
+    }
+
+    public function product_selling_print(Request $request) {
+        $selling = ProductSelling::with(['customer', 'product'])->whereBetween('date', [$request->date_start, $request->date_end])->orderBy('date', 'ASC')->get();
+        return view('pages.admin.report.selling.print', compact('selling'));
     }
 }

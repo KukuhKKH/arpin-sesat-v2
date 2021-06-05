@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Report\ReportController;
 use App\Http\Controllers\Admin\Transaction\MaterialOutController;
 use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
 use App\Http\Controllers\Admin\Transaction\ProductTransactionController;
+use App\Http\Controllers\Admin\Transaction\SellingController;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::get('/', [HomeController::class, 'index'])->name('admin.index');
@@ -53,6 +54,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::get('product/{id}', [ProductTransactionController::class, 'show'])->name('product.show');
         Route::post('product', [ProductTransactionController::class, 'store'])->name('product.store');
         Route::delete('product/{id}', [ProductTransactionController::class, 'destroy'])->name('product.destroy');
+        Route::get('selling', [SellingController::class, 'index'])->name('selling.index');
+        Route::post('selling', [SellingController::class, 'store'])->name('selling.store');
+        Route::delete('selling/{id}', [SellingController::class, 'destroy'])->name('selling.destroy');
     });
 
     Route::group(['prefix' => 'report', 'as' => 'report.', 'middleware' => 'role:admin|pemilik'], function() {
@@ -60,6 +64,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::post('material/{type}', [ReportController::class, 'material_print'])->name('material.print');
         Route::get('stock/material/{type}', [ReportController::class, 'stock_material'])->name('stock.material');
         Route::post('stock/material/{id}', [ReportController::class, 'stock_material_post'])->name('stock.material.post');
+        Route::get('selling', [ReportController::class, 'product_selling'])->name('selling.index');
+        Route::post('selling', [ReportController::class, 'product_selling_print'])->name('selling.print');
     });
 
 });
