@@ -9,7 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
 
     <!-- Page title -->
-    <title>@yield('title', 'Dashboard')</title>
+    <title>@yield('title', 'UD Langgeng Gypsum')</title>
 
     <!-- Vendor styles -->
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.css') }}"/>
@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                     <div class="view-header">
                         <div class="pull-right text-right" style="line-height: 14px">
-                            <small>Arpin Sesat <br><span class="c-white">v.2.0</span></small>
+                            <small>UD Langgeng Gypsum <br><span class="c-white">2021</span></small>
                         </div>
                         <div class="header-icon">
                             <i class="pe page-header-icon pe-7s-shield"></i>

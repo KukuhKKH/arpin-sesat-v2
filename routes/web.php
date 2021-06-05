@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', function () {
+        $title =[
+            'page_name' => "UD Langgeng Gypsum"
+        ];
         return view('welcome');
     });
 });
