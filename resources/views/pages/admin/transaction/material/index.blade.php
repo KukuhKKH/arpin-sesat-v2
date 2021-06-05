@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Transaksi Bahan {{ request()->segment(4) == 1 ? 'Baku' : 'Penolong' }}</button>
+                            <button class="btn btn-outline-primary btn-sm mb-4" onclick="add()"><i class="zwicon-plus"></i> Tambah Pembelian Bahan {{ request()->segment(4) == 1 ? 'Baku' : 'Penolong' }}</button>
                         </div>
                         <div>
 

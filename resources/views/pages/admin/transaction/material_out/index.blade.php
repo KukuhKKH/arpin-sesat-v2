@@ -130,13 +130,13 @@
 
     const reject = id => {
         $swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Tolak keluarkan bahan',
+            text: "Anda yakin?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ya, Tolak!'
         })
         .then(res => {
             if(res.isConfirmed) {
@@ -155,13 +155,13 @@
 
     const approve = id => {
         $swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Keluarkan bahan',
+            text: "Anda sudah yakin?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ya, keluarkan!'
         })
         .then(res => {
             if(res.isConfirmed) {

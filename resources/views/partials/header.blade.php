@@ -8,8 +8,8 @@
             </div>
         </div>
         <a class="navbar-brand" href="{{ url('/dashboard') }}">
-            ARPN
-            <span>v.2.0</span>
+            
+            <span><h5>UD Langgeng Gypsum</h5></span>
         </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -31,7 +31,7 @@
             @endrole
             <li class="nav-item profil-link">
                 <a href="login.html">
-                    <span class="profile-address">arpin@sesat.io</span>
+                    <span class="profile-address">udlanggenggypsum.com</span>
                     <img src="{{ asset('assets/images/profile.jpg') }}" class="rounded-circle" alt="">
                 </a>
             </li>

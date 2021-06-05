@@ -19,12 +19,12 @@ class MaterialTransactionController extends Controller
         $materialTransaction = $query->with('supplier')->paginate(10);
         if($type == 1) {
             $title = [
-                'page_name' => "Halaman Transaksi Bahan Baku",
+                'page_name' => "Halaman Transaksi Pembelian Bahan Baku",
                 'page_description' => 'Manage Transaksi Bahan Baku'
             ];
         } else {
             $title = [
-                'page_name' => "Halaman Transaksi Bahan Penolong",
+                'page_name' => "Halaman Transaksi Pembelian Bahan Penolong",
                 'page_description' => 'Manage Transaksi Bahan Penolong'
             ];
         }

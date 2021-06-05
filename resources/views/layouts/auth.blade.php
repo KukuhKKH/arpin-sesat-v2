@@ -8,7 +8,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
 
     <!-- Page title -->
-    <title>Login</title>
+    <title>Login | UD Langgeng Gypsum</title>
 
     <!-- Vendor styles -->
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/font-awesome.css') }}"/>
@@ -30,15 +30,17 @@
     <!-- Main content-->
     <section class="content">
         <div class="container-center animated slideInDown">
-
+        <h1><center> UD Langgeng Gypsum</h1></center>
             <div class="view-header">
                 <div class="header-icon">
                     <i class="pe page-header-icon pe-7s-unlock"></i>
                 </div>
+               
                 <div class="header-title">
+                
                     <h3>Login</h3>
                     <small>
-                        Please enter your credentials to login.
+                        Masukkan Username dan Password Anda
                     </small>
                 </div>
             </div>
@@ -50,7 +52,7 @@
                         <div class="form-group">
                             <label class="col-form-label" for="username">Username</label>
                             <input type="text" placeholder="Username" title="Please enter you username" required="" value="{{ old('username') }}" name="username" id="username" class="form-control @error('username') is-invalid @enderror">
-                            <span class="form-text small">Your unique username to app</span>
+                            <span class="form-text small"></span>
                             @error('username')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -58,7 +60,7 @@
                         <div class="form-group">
                             <label class="col-form-label" for="password">Password</label>
                             <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control @error('username') is-invalid @enderror">
-                            <span class="form-text small">Your strong password</span>
+                            <span class="form-text small"></span>
                         </div>
                         <div>
                             <button class="btn btn-accent" type="submit">Login</button>
