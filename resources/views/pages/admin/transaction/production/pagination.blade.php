@@ -36,11 +36,11 @@
                 @endphp
                 <td>Rp. {{ number_format($subtotal) }}</td>
                 <td>
-                    <form action="{{ route('transaction.product.destroy', $value->id) }}" method="POST">
+                    <form action="{{ route('transaction.product.destroy', $value->id) }}" method="POST" id="form-{{ $value->id }}">
                         @csrf
                         @method("DELETE")
                         <a href="{{ route('transaction.product.show', $value->id) }}" class="btn btn-sm btn-success">Detail</a>
-                        <button type="submit" class="btn btn-sm btn-danger">DELETE</button>
+                        <button type="button" onclick="destroy({{ $value->id }})" class="btn btn-sm btn-danger">DELETE</button>
                     </form>
                 </td>
             </tr>

@@ -28,6 +28,21 @@ class SellingController extends Controller
     }
 
     public function store(SellingCreateRequest $request) {
+        $master_product = Product::find($request->product_id);
+        if($request->amount > $master_product->total) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'head' => "Gagal",
+                    'body' => "Stok produk ".$master_product->name ." adalah ".$master_product->total
+                ]
+            ], 500);
+        }
+        $last_amount = $master_product->total;
+        $subtotal = $last_amount - $request->amount;
+        $master_product->update([
+            'total' => $subtotal
+        ]);
         ProductSelling::create($request->all());
         return response()->json([
             'status' => true,

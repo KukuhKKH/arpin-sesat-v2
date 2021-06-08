@@ -18,6 +18,7 @@ class ProductController extends Controller
     {
         $data = $request->all();
         $query = Product::query();
+        $query->with('product_transaction');
         $product = $query->paginate(10);
         $title = [
             'page_name' => "Halaman Data Produk Jadi",

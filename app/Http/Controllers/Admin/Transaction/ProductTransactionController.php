@@ -85,8 +85,14 @@ class ProductTransactionController extends Controller
                     'overhead_id' => $value,
                 ]);
             }
+            $master_product = Product::find($request->product_id);
+            $last_amount = $master_product->total;
+            $subtotal = $last_amount + $request->amount;
+            $master_product->update([
+                'total' => $subtotal
+            ]);
             DB::commit();
-            return redirect()->route('master.product.index')->with('success', 'Berhasil');
+            return redirect()->route('transaction.product.index')->with('success', 'Berhasil');
         } catch(\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

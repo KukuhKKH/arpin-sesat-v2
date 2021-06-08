@@ -66,6 +66,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::post('stock/material/{id}', [ReportController::class, 'stock_material_post'])->name('stock.material.post');
         Route::get('selling', [ReportController::class, 'product_selling'])->name('selling.index');
         Route::post('selling', [ReportController::class, 'product_selling_print'])->name('selling.print');
+
+        Route::get('storage', [ReportController::class, 'storage_index'])->name('storage.index');
+        Route::post('storage/{id}', [ReportController::class, 'storage_post'])->name('storage.post');
+
+        Route::get('arpin/babi', [ReportController::class, 'dev_babi']);
     });
 
 });

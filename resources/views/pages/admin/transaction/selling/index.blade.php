@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="">Pemasok</label>
+                                    <label for="">Pelanggan</label>
                                     <select name="customer_id" id="customer_id" class="form-control">
                                         <option value="" selected disabled>== Pilih Pelanggan ==</option>
                                         @foreach ($customer as $value)
