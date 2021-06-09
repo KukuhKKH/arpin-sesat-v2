@@ -19,6 +19,11 @@
         </tr>
     </thead>
     <tbody>
+        @php
+            $saldo_qty = 0;
+            $saldo_price = 0;
+            $saldo_total = 0;
+        @endphp
         @foreach ($material as $value)
             <tr>
                 <td>{{ date('d F Y', strtotime(isset($value['date_in']) ? $value['date_in'] : $value['date_out'])) }}</td>
@@ -38,13 +43,23 @@
                 @endif
                 @php
                     $total_amount = (isset($value['qty_in']) ? $value['qty_in'] : 0) - (isset($value['qty_out']) ? $value['qty_out'] : 0);
-                    $total_price = (isset($value['price_in']) ? $value['price_in'] : 0) - (isset($value['price_out']) ? $value['price_out'] : 0);
+                    $total_price = isset($value['price_in']) ? $value['price_in'] : $value['price_out'];
                     $subtotal = $total_amount * $total_price;
+
+                    $saldo_total += $subtotal;
+                    $saldo_qty += $total_amount;
+                    $saldo_price = $total_price;
                 @endphp
                 <td>{{ $total_amount }}</td>
                 <td>Rp. {{ number_format($total_price) }}</td>
                 <td>Rp. {{ number_format($subtotal) }}</td>
             </tr>
         @endforeach
+        <tr>
+            <td colspan="7" class="text-right">Saldo</td>
+            <td>{{ $saldo_qty }}</td>
+            <td>Rp. {{ number_format($saldo_price) }}</td>
+            <td>Rp. {{ number_format($saldo_total) }}</td>
+        </tr>
     </tbody>
 </table>

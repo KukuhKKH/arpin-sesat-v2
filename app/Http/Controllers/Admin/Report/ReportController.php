@@ -58,16 +58,27 @@ class ReportController extends Controller
         $out = MaterialOut::selectRaw("sum(price) price_out, date date_out, sum(amount) qty_out")->where('material_id', $id)->groupBy('date')->get();
         $new_collection = [];
         foreach ($in as $key => $value) {
-            $new_collection[$value->date_in]['price_in'] = $value->price_in;
-            $new_collection[$value->date_in]['date_in'] = $value->date_in;
-            $new_collection[$value->date_in]['qty_in'] = $value->qty_in;
             $data = $this->searchForId($value->date_in, $out);
+
+            $new_collection[strtotime($value->date_in)]['price_in'] = $value->price_in;
+            $new_collection[strtotime($value->date_in)]['date_in'] = $value->date_in;
+            $new_collection[strtotime($value->date_in)]['qty_in'] = $value->qty_in;
+
             if(isset($data)) {
-                $new_collection[$value->date_in]['price_out'] = $out[$data]->price_out;
-                $new_collection[$value->date_in]['date_out'] = $out[$data]->date_out;
-                $new_collection[$value->date_in]['qty_out'] = $out[$data]->qty_out;
+                $new_collection[strtotime($value->date_in)]['price_out'] = $out[$data]->price_out;
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]->date_out;
+                $new_collection[strtotime($value->date_in)]['qty_out'] = $out[$data]->qty_out;
+                unset($out[$data]);
             }
         }
+        if(count($out) > 0) {
+            foreach ($out as $key => $value) {
+                $new_collection[strtotime($value->date_out)]['price_out'] = $value->price_out;
+                $new_collection[strtotime($value->date_out)]['date_out'] = $value->date_out;
+                $new_collection[strtotime($value->date_out)]['qty_out'] = $value->qty_out;
+            }
+        }
+        ksort($new_collection);
         $material = $new_collection;
         return view('pages.admin.report.stock.table', compact('material'))->render();
     }
@@ -107,20 +118,34 @@ class ReportController extends Controller
         //                     ->where("m_materials.id", 4)
         //                     // ->groupBy("material_transactions.date, material_out.date")
         //                     ->get();
-        $in = MaterialTransaction::selectRaw("sum(price) price_in, date date_in, sum(amount) qty_in")->where('material_id', 4)->groupBy('date')->get();
-        $out = MaterialOut::selectRaw("sum(price) price_out, date date_out, sum(amount) qty_out")->where('material_id', 4)->groupBy('date')->get();
+        $in = MaterialTransaction::selectRaw("sum(price) price_in, date date_in, sum(amount) qty_in")->where('material_id', 1)->groupBy('date')->get();
+        $out = MaterialOut::selectRaw("sum(price) price_out, date date_out, sum(amount) qty_out")->where('material_id', 1)->groupBy('date')->get();
         $new_collection = [];
+        $count_in = count($in);
         foreach ($in as $key => $value) {
-            $new_collection[$value->date_in]['price_in'] = $value->price_in;
-            $new_collection[$value->date_in]['date_in'] = $value->date_in;
-            $new_collection[$value->date_in]['qty_in'] = $value->qty_in;
             $data = $this->searchForId($value->date_in, $out);
+
+            $new_collection[strtotime($value->date_in)]['price_in'] = $value->price_in;
+            $new_collection[strtotime($value->date_in)]['date_in'] = $value->date_in;
+            $new_collection[strtotime($value->date_in)]['qty_in'] = $value->qty_in;
+
             if(isset($data)) {
-                $new_collection[$value->date_in]['price_out'] = $out[$data]->price_out;
-                $new_collection[$value->date_in]['date_out'] = $out[$data]->date_out;
-                $new_collection[$value->date_in]['qty_out'] = $out[$data]->qty_out;
+                $new_collection[strtotime($value->date_in)]['price_out'] = $out[$data]->price_out;
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]->date_out;
+                $new_collection[strtotime($value->date_in)]['qty_out'] = $out[$data]->qty_out;
+                unset($out[$data]);
             }
         }
+        if(count($out) > 0) {
+            foreach ($out as $key => $value) {
+                $new_collection[strtotime($value->date_out)]['price_out'] = $value->price_out;
+                $new_collection[strtotime($value->date_out)]['date_out'] = $value->date_out;
+                $new_collection[strtotime($value->date_out)]['qty_out'] = $value->qty_out;
+            }
+        }
+        ksort($new_collection);
+        dd($new_collection);
+        dd($in->toArray(), $out->toArray());
         dd($new_collection);
         dd($in, $out);
         // dd($material);
