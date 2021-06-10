@@ -103,7 +103,7 @@
                 "showEasing": "swing",
                 "timeOut": "6000"
             };
-            toastr.success('<strong>Welcome to mobile legend</small>');
+            toastr.success('<strong> Selamat datang di UD Langgeng Gypsum</small>');
         }, 1600)
         @endif
 
