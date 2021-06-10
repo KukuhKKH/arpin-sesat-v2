@@ -108,10 +108,10 @@ class ReportController extends Controller
     public function storage_post($id) {
         // $product = product::with(['product_transaction', 'product_selling'])->find($id);
         $in = DB::table("product_transactions")->selectRaw("SUM(m_product.price) as price_in, sum(product_transactions.amount) as qty_in, product_transactions.date as date_in")
-                    ->join("m_product", "product_transactions.product_id", "=", "m_product.id", "LEFT")
+                    ->join("m_product", "product_transactions.product_id", "=", "m_product.id", "LEFT") ->where('product_id', $id)
                     ->groupBy("product_transactions.date")->get()->toArray();
         $out = DB::table("product_sellings")->selectRaw("SUM(m_product.price) as price_out, sum(product_sellings.amount) as qty_out, product_sellings.date as date_out")
-                    ->join("m_product", "product_sellings.product_id", "=", "m_product.id", "LEFT")
+                    ->join("m_product", "product_sellings.product_id", "=", "m_product.id", "LEFT") ->where('product_id', $id)
                     ->groupBy("product_sellings.date")->get()->toArray();
         $new_collection = [];
         foreach ($in as $key => $value) {
