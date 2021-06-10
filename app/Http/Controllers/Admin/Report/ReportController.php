@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Report;
 
-use App\Http\Controllers\Controller;
-use App\Models\Master\Material;
+use Illuminate\Http\Request;
 use App\Models\Master\Product;
+use App\Models\Master\Material;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Models\Transaction\MaterialOut;
-use App\Models\Transaction\MaterialTransaction;
 use App\Models\Transaction\ProductSelling;
 use App\Models\Transaction\ProductTransaction;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Transaction\MaterialTransaction;
 
 class ReportController extends Controller
 {
@@ -106,18 +106,74 @@ class ReportController extends Controller
     }
 
     public function storage_post($id) {
-        $product = product::with(['product_transaction', 'product_selling'])->find($id);
+        // $product = product::with(['product_transaction', 'product_selling'])->find($id);
+        $in = DB::table("product_transactions")->selectRaw("SUM(m_product.price) as price_in, sum(product_transactions.amount) as qty_in, product_transactions.date as date_in")
+                    ->join("m_product", "product_transactions.product_id", "=", "m_product.id", "LEFT")
+                    ->groupBy("product_transactions.date")->get()->toArray();
+        $out = DB::table("product_sellings")->selectRaw("SUM(m_product.price) as price_out, sum(product_sellings.amount) as qty_out, product_sellings.date as date_out")
+                    ->join("m_product", "product_sellings.product_id", "=", "m_product.id", "LEFT")
+                    ->groupBy("product_sellings.date")->get()->toArray();
+        $new_collection = [];
+        foreach ($in as $key => $value) {
+            $data = $this->searchForId($value->date_in, $out);
+
+            $new_collection[strtotime($value->date_in)]['price_in'] = $value->price_in;
+            $new_collection[strtotime($value->date_in)]['date_in'] = $value->date_in;
+            $new_collection[strtotime($value->date_in)]['qty_in'] = $value->qty_in;
+
+            if(isset($data)) {
+                $new_collection[strtotime($value->date_in)]['price_out'] = $out[$data]['price_out'];
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]['date_out'];
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]['qty_out'];
+                unset($out[$data]);
+            }
+        }
+        if(count($out) > 0) {
+            foreach ($out as $key => $value) {
+                $new_collection[strtotime($value->date_out)]['price_out'] = $value->price_out;
+                $new_collection[strtotime($value->date_out)]['date_out'] = $value->date_out;
+                $new_collection[strtotime($value->date_out)]['qty_out'] = $value->qty_out;
+            }
+        }
+        ksort($new_collection);
+        $product = $new_collection;
         return view('pages.admin.report.storage.table', compact('product'))->render();
     }
 
+    public function dev_babi2() {
+        $in = DB::table("product_transactions")->selectRaw("SUM(m_product.price) as price_in, product_transactions.amount as qty_in, product_transactions.date as date_in")
+                    ->join("m_product", "product_transactions.product_id", "=", "m_product.id", "LEFT")
+                    ->groupBy("product_transactions.date")->get()->toArray();
+        $out = DB::table("product_sellings")->selectRaw("SUM(m_product.price) as price_out, product_sellings.amount as qty_out, product_sellings.date as date_out")
+                    ->join("m_product", "product_sellings.product_id", "=", "m_product.id", "LEFT")
+                    ->groupBy("product_sellings.date")->get()->toArray();
+        $new_collection = [];
+        foreach ($in as $key => $value) {
+            $data = $this->searchForId($value->date_in, $out);
+
+            $new_collection[strtotime($value->date_in)]['price_in'] = $value->price_in;
+            $new_collection[strtotime($value->date_in)]['date_in'] = $value->date_in;
+            $new_collection[strtotime($value->date_in)]['qty_in'] = $value->qty_in;
+
+            if(isset($data)) {
+                $new_collection[strtotime($value->date_in)]['price_out'] = $out[$data]['price_out'];
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]['date_out'];
+                $new_collection[strtotime($value->date_in)]['date_out'] = $out[$data]['qty_out'];
+                unset($out[$data]);
+            }
+        }
+        if(count($out) > 0) {
+            foreach ($out as $key => $value) {
+                $new_collection[strtotime($value->date_out)]['price_out'] = $value->price_out;
+                $new_collection[strtotime($value->date_out)]['date_out'] = $value->date_out;
+                $new_collection[strtotime($value->date_out)]['qty_out'] = $value->qty_out;
+            }
+        }
+        ksort($new_collection);
+        dd($new_collection);
+    }
+
     public function dev_babi() {
-        // $material = Material::with(['transaction', 'out'])->find(4);
-        // $material = DB::table("m_materials")
-        //                     ->join("material_transactions", "m_materials.id", "=", "material_transactions.material_id", "LEFT")
-        //                     ->join("material_out", "m_materials.id", "=", "material_out.material_id", "LEFT")
-        //                     ->where("m_materials.id", 4)
-        //                     // ->groupBy("material_transactions.date, material_out.date")
-        //                     ->get();
         $in = MaterialTransaction::selectRaw("sum(price) price_in, date date_in, sum(amount) qty_in")->where('material_id', 1)->groupBy('date')->get();
         $out = MaterialOut::selectRaw("sum(price) price_out, date date_out, sum(amount) qty_out")->where('material_id', 1)->groupBy('date')->get();
         $new_collection = [];
@@ -153,7 +209,7 @@ class ReportController extends Controller
 
     private function searchForId($id, $array) {
         foreach ($array as $key => $val) {
-            if ($val['date_out'] === $id) {
+            if ($val->date_out === $id) {
                 return $key;
             }
         }

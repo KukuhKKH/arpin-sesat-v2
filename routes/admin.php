@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::post('storage/{id}', [ReportController::class, 'storage_post'])->name('storage.post');
 
         Route::get('arpin/babi', [ReportController::class, 'dev_babi']);
+        Route::get('arpin/babi2', [ReportController::class, 'dev_babi2']);
     });
 
 });
