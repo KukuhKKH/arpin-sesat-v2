@@ -22,4 +22,8 @@ Route::group(['middleware' => 'auth'], function() {
         ];
         return view('welcome');
     });
+
+    Route::post('/', function() {
+        return view('partials.info')->render();
+    })->name('dashboard.data');
 });

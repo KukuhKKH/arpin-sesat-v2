@@ -23,8 +23,14 @@
                         <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/18TXgQ5dgoA?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
+                <div id="fieldHtmlData" class="mt-2"></div>
             {{-- </div> --}}
         {{-- </div> --}}
     </div>
 </div>
+@endsection
+@section('js')
+    <script>
+        $axios.post(`{{ route('dashboard.data') }}`).then(res => $('#fieldHtmlData').html(res.data)).catch(err => console.log(err))
+    </script>
 @endsection
