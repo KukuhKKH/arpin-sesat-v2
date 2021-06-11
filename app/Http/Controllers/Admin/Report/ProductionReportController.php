@@ -69,14 +69,6 @@ class ProductionReportController extends Controller
 
         $total_stock_material += Coa::where('code', '1-102')->first()->balance;
 
-        return view('pages.admin.report.production.table', [
-            'total_stock_material' => $total_stock_material,
-            'total_buying_material' => $total_buying_material,
-            'total_stock_material_end' => $total_stock_material_end,
-            'total_overhead_fix' => $total_overhead_fix,
-            'total_overhead_var' => $total_overhead_var,
-            'total_help_material' => $total_help_material,
-            'total_salary' => $total_salary,
-        ])->render();
+        return view('pages.admin.report.production.table', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'))->render();
     }
 }
