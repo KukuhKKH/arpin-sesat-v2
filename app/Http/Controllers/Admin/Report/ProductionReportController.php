@@ -20,6 +20,7 @@ class ProductionReportController extends Controller
     }
 
     public function post() {
+        sleep(3);
         $RAW_MATERIAL = 1; // Code
 
         $total_stock_material = 0; // Persediaan bahan Baku Awal Dari COA
