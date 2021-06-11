@@ -168,6 +168,14 @@
             toastr.error(err.response.data.message.body, err.response.data.message.head)
         }
     }
+
+    const sum_loading = type => {
+        if(type == "show") {
+            loading('show', '#panel-loader', {text: `{{ config('app.text') }}`, image: null})
+        } else {
+            loading('hide', '#panel-loader')
+        }
+    }
 </script>
 @yield('js')
 </body>

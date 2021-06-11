@@ -22,11 +22,11 @@
 
 @section('js')
 <script>
-    loading('show', '#panel-loader', {text: `{{ config('app.text') }}`, image: null})
+    sum_loading('show')
     new Promise((resolve, reject) => {
         $axios.post(`{{ route('report.production.post') }}`)
             .then(res => {
-                loading('hide', '#panel-loader')
+                sum_loading('hide')
                 $("#table_data").html(res.data)
             })
     })
