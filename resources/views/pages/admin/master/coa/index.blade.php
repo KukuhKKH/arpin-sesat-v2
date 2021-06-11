@@ -48,6 +48,12 @@
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Nama Akun">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Saldo Akhir</label>
+                                    <input type="text" class="form-control" id="balance" name="balance" placeholder="Saldo Akhir">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -127,6 +133,7 @@
                     $("#fieldId").val(material.id)
                     $("#code").val(material.code)
                     $("#name").val(material.name)
+                    $("#balance").val(material.balance)
                     $("#modal-data").modal('show')
                 })
         })

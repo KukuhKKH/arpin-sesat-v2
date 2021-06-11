@@ -2,19 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Master\CoaController;
+use App\Http\Controllers\Admin\Master\TeamController;
+use App\Http\Controllers\Admin\Master\UserController;
+use App\Http\Controllers\Admin\Report\ReportController;
+use App\Http\Controllers\Admin\Master\ProductController;
 use App\Http\Controllers\Admin\Master\CustomerController;
 use App\Http\Controllers\Admin\Master\EmployeeController;
 use App\Http\Controllers\Admin\Master\MaterialController;
 use App\Http\Controllers\Admin\Master\OverheadController;
-use App\Http\Controllers\Admin\Master\ProductController;
 use App\Http\Controllers\Admin\Master\SupplierController;
-use App\Http\Controllers\Admin\Master\TeamController;
-use App\Http\Controllers\Admin\Master\UserController;
-use App\Http\Controllers\Admin\Report\ReportController;
-use App\Http\Controllers\Admin\Transaction\MaterialOutController;
-use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
-use App\Http\Controllers\Admin\Transaction\ProductTransactionController;
 use App\Http\Controllers\Admin\Transaction\SellingController;
+use App\Http\Controllers\Admin\Report\ProductionReportController;
+use App\Http\Controllers\Admin\Transaction\MaterialOutController;
+use App\Http\Controllers\Admin\Transaction\ProductTransactionController;
+use App\Http\Controllers\Admin\Transaction\MaterialTransactionController;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::get('/', [HomeController::class, 'index'])->name('admin.index');
@@ -72,6 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
 
         Route::get('arpin/babi', [ReportController::class, 'dev_babi']);
         Route::get('arpin/babi2', [ReportController::class, 'dev_babi2']);
+
+        Route::get('harga-pokok-produksi', [ProductionReportController::class, 'index'])->name('production.index');
+        Route::post('harga-pokok-produksi', [ProductionReportController::class, 'post'])->name('production.post');
+        Route::get('harga-pokok', [ProductionReportController::class, 'post']);
     });
 
 });
