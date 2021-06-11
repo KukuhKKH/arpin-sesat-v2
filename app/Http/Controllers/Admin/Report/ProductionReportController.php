@@ -19,7 +19,7 @@ class ProductionReportController extends Controller
         return view('pages.admin.report.production.index', compact('title'));
     }
 
-    public function post() {
+    public function post(Request $request) {
         sleep(3);
         $RAW_MATERIAL = 1; // Code
 
@@ -69,6 +69,10 @@ class ProductionReportController extends Controller
 
         $total_stock_material += Coa::where('code', '1-102')->first()->balance;
 
-        return view('pages.admin.report.production.table', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'))->render();
+        if($request->isMethod('post')) {
+            return view('pages.admin.report.production.table', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'))->render();
+        } else {
+            return view('pages.admin.report.production.print', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'));
+        }
     }
 }

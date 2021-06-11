@@ -12,6 +12,11 @@
                 <div class="d-flex justify-content-between">
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{{ route('report.production.print') }}" class="btn btn-lg btn-primary btn-block">Print</a>
+                </div>
+            </div>
             <div class="panel-body" id="table_data">
                 <div style="height: 100vh"></div>
             </div>

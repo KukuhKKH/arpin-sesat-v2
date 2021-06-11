@@ -1,15 +1,4 @@
 <table class="table table-bordered table-hovered">
-        {{-- <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>BOP :</td>
-            <td></td>
-            <td>Overhead Variabel</td>
-            <td>Bahan Penolong</td>
-            <td></td>
-            <td>Harga Pokok Produksi</td>
-        </tr> --}}
     <tbody>
         <tr>
             <td>Persediaan Bahan Baku Awal</td>
