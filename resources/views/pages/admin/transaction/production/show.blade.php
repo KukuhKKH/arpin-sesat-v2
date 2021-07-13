@@ -17,7 +17,7 @@
                 <table class="table table-bordered table-hovered">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Harga</th>
                             <th>Total</th>
@@ -42,7 +42,7 @@
                 <table class="table table-bordered table-hovered">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Harga</th>
                             <th>Total</th>
@@ -71,7 +71,7 @@
                 <table class="table table-bordered table-hovered">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Harga</th>
                         </tr>
@@ -96,7 +96,7 @@
                 <table class="table table-bordered table-hovered">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Harga</th>
                         </tr>
@@ -116,7 +116,46 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+                <p>Biaya Produksi</p>
+                <table class="table table-bordered table-hovered">
+                    <thead>    
+                    </thead>
+                    <tbody>
+                        @php
+                            $total = 0;
+                            $bahanbaku = 0;
+                            $bahanpenolong = 0;
+                            $overheadTetap = 0;
+                            $overheadVariable = 0;
+                            
+                            foreach($productTransaction->transaction_material as $baku){
+                                if($baku->material->type ==1){
+                                    $bahanbaku += ($baku->material->price * $baku->amount); 
+                                }
+                            }
+                            foreach($productTransaction->transaction_material as $penolong){
+                                if($penolong->material->type ==2){
+                                    $bahanpenolong += $penolong->material->price * $penolong->amount; 
+                                }
+                            }
+                            foreach($productTransaction->transaction_overhead as $ovTetap){
+                                if($ovTetap->overhead->type ==1){
+                                    $overheadTetap += $ovTetap->overhead->price; 
+                                }
+                            }
+                            foreach($productTransaction->transaction_overhead as $ovVar){
+                                if($ovVar->overhead->type ==2){
+                                    $overheadVariable += $ovVar->overhead->price; 
+                                }
+                            }  
+                            $total =$bahanbaku + $bahanpenolong + $overheadTetap + $overheadVariable;
+                            @endphp
+                                <tr>
+                                    <td>Rp. {{ number_format($total + $productTransaction->team->salary) }}</td>
+                                </tr>
+                           
+                    </tbody>
+                </table>
         </div>
     </div>
 </div>

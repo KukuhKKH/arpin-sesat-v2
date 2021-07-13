@@ -24,7 +24,11 @@ class MaterialCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'code' => 'required',
+            'name' => 'required',
+            'unit' => 'required',
+            'price' => 'required'
+           
         ];
     }
 }

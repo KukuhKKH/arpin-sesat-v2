@@ -41,7 +41,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
 
         });
         Route::group(['middleware' => 'role:produksi'], function() {
-
+            Route::put('selesai-produksi/{id}', [ProductTransactionController::class, 'selesaiProduksi'])->name('product.selesai');
+            Route::get('selesai', [ProductTransactionController::class, 'indexSelesai'])->name('product.indexselesai');
         });
         Route::get('material/{type}/index', [MaterialTransactionController::class, 'index'])->name('material.index');
         Route::post('material', [MaterialTransactionController::class, 'store'])->name('material.store');

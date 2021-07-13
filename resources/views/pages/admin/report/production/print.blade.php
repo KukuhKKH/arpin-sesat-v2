@@ -11,13 +11,14 @@
 
 <body>
     <h1>
-        <center>UD LANGGENG GIPSUM PONOROGO</center>
+        <center>UD Langgeng Gypsum Ponorogo</center>
     </h1>
+    
     <h3>
-        <center>HARGA POKOK PRODUKSI</center>
+        <center>Laporan Harga Pokok Produksi</center>
     </h3>
     <p>
-        <center>TAHUN {{ date('Y') }}</center>
+        <center> Maret {{ date('Y') }}</center>
     </p>
     <div class="container">
         <table class="table table-bordered table-hovered">
@@ -85,7 +86,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td>Total BOP</td>
                     <td></td>
                     <td>Rp {{ number_format($subtotal_bop) }}</td>
                 </tr>
@@ -93,10 +94,35 @@
                     @php
                     $total = $subtotal + $subtotal_bop
                     @endphp
-                    <td>Harga Pokok Produksi</td>
+                    <td>Biaya Produksi</td>
                     <td></td>
                     <td>Rp {{ number_format($total) }}</td>
                 </tr>
+                <tr>
+                    <td>Produk Dalam Proses Awal</td>
+                    <td></td>
+                    <td>Rp {{ number_format(0) }}</td>
+                </tr>
+                <tr>
+                    @php
+                        $total = $subtotal + $subtotal_bop
+                    @endphp
+                    <td>Produk Selesai</td>
+                    <td></td>
+                    <td>Rp {{ number_format($total) }}</td>
+                </tr>
+                <tr>
+                    <td>Produk Dalam Proses Akhir</td>
+                    <td></td>
+                    <td>Rp {{ number_format(0) }}</td>
+                </tr>
+                <tr>
+                    @php
+                        $total = $subtotal + $subtotal_bop
+                    @endphp
+                    <td>Harga Pokok Produksi</td>
+                    <td></td>
+                    <td>Rp {{ number_format($total) }}</td>
             </tbody>
         </table>
     </div>

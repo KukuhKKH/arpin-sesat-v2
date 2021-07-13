@@ -27,7 +27,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-    'text' => 'Sedang Menghitung Ghan',
+    'text' => 'Mohon Ditunggu',
 
     /*
     |--------------------------------------------------------------------------

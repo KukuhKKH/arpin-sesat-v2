@@ -47,6 +47,7 @@
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(4) == 2 && request()->segment(3) == 'material-out' ? 'active' : '' }}"><a href="{{ route('transaction.material-out.index', 2) }}"> Permintaan Bahan Penolong</a></li>
                     @role('produksi')
                     <li class="{{ request()->segment(2) == 'transaction' && request()->segment(3) == 'product' ? 'active' : '' }}"><a href="{{ route('transaction.product.index') }}"> Produksi</a></li>
+                    <li class="{{ request()->segment(2) == 'transaction' && request()->segment(3) == 'selesai' ? 'active' : '' }}"><a href="{{ route('transaction.product.indexselesai') }}"> Selesai Produksi</a></li>
                     @endrole
                 </ul>
             </li>
@@ -66,6 +67,7 @@
                     {{-- <li class=""><a href=""> Jurnal Umum</a></li>
                     <li class=""><a href=""> Buku Besar</a></li> --}}
                     <li class="{{ request()->segment(3) == 'harga-pokok-produksi' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.production.index') }}"> Harga Pokok Produksi</a></li>
+                    <li class="{{ request()->segment(3) == 'harga-pokok-produksi' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.production.index') }}"> Harga Pokok Produksi Per Produk</a></li>
                 </ul>
             </li>
             @endhasanyrole

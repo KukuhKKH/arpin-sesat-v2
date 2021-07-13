@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <a href="{{ route('transaction.product.create') }}" class="btn btn-outline-primary btn-sm mb-4"><i class="zwicon-plus"></i> Tambah Produksi</a>
+                            {{-- <a href="{{ route('transaction.product.create') }}" class="btn btn-outline-primary btn-sm mb-4"><i class="zwicon-plus"></i> Tambah Produksi</a> --}}
                         </div>
                         <div>
 
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="panel-body" id="table_data">
-                    @include('pages.admin.transaction.production.pagination')
+                    @include('pages.admin.transaction.production.selesai-table')
                 </div>
             </div>
         </div>

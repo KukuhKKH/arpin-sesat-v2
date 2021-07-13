@@ -19,7 +19,7 @@ class ProductTransactionController extends Controller
         $data = $request->all();
         $query = ProductTransaction::query();
         // dd($query->first());
-        $production = $query->paginate(10);
+        $production = $query->where('status', '!=', 'selesai')->paginate(10);
         $title = [
             'page_name' => "Halaman Produksi",
             'page_description' => 'Manage Produksi'
@@ -108,5 +108,21 @@ class ProductTransactionController extends Controller
         $productTransactionOverhead->delete();
         $productTransaction->delete();
         return redirect()->back()->with('success', 'Berhasil');
+    }
+
+    public function selesaiProduksi($id)
+    {
+        $selesai = ProductTransaction::findOrFail($id)->update([
+            'status' => 'selesai'
+        ]);
+
+        return redirect()->back()->with('success', 'Produksi Selesai');
+    }
+
+    public function indexSelesai()
+    {
+        $produkSelesai = ProductTransaction::where('status', 'selesai')->paginate(20);
+
+        return view('pages.admin.transaction.production.index-selesai', compact('produkSelesai'));
     }
 }

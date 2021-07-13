@@ -63,9 +63,35 @@
             <td></td>
         </tr>
         <tr>
-            <td></td>
+            <td>Total BOP</td>
             <td></td>
             <td>Rp {{ number_format($subtotal_bop) }}</td>
+        </tr>
+        <tr>
+            @php
+                $total = $subtotal + $subtotal_bop
+            @endphp
+            <td>Biaya Produksi</td>
+            <td></td>
+            <td>Rp {{ number_format($total) }}</td>
+        </tr>
+        <tr>
+            <td>Produk Dalam Proses Awal</td>
+            <td></td>
+            <td>Rp {{ number_format(0) }}</td>
+        </tr>
+        <tr>
+            @php
+                $total = $subtotal + $subtotal_bop
+            @endphp
+            <td>Produk Selesai</td>
+            <td></td>
+            <td>Rp {{ number_format($total) }}</td>
+        </tr>
+        <tr>
+            <td>Produk Dalam Proses Akhir</td>
+            <td></td>
+            <td>Rp {{ number_format(0) }}</td>
         </tr>
         <tr>
             @php

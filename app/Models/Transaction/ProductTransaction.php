@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductTransaction extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id', 'team_id', 'date', 'amount'];
+    protected $fillable = ['product_id', 'team_id', 'date', 'amount', 'status'];
     protected $with = ['transaction_material', 'transaction_overhead'];
 
     public function product() {

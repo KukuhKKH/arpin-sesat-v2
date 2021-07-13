@@ -11,10 +11,10 @@
 
 <body>
     <h1>
-        <center>UD LANGGENG GIPSUM PONOROGO</center>
+        <center>UD Langgeng Gypsum Ponorogo</center>
     </h1>
     <h3>
-        <center>LAPORAN PENJUALAN PRODUK</center>
+        <center>Laporan Penjualan Produk</center>
     </h3>
     <p>
         <center>{{ date('D d F Y') }}</center>
@@ -29,7 +29,8 @@
                     <th>Nama Pelanggan</th>
                     <th>Produk</th>
                     <th>Jumlah</th>
-                    <th>Harga</th>
+                    <th>Harga Satuan</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +42,7 @@
                     <td>{{ $value->customer->name }}</td>
                     <td>{{ $value->product->name }}</td>
                     <td>{{ $value->amount }}</td>
+                    <td>{{ $value->product->price }}</td>
                     <td>Rp. {{ number_format(($value->amount * $value->product->price)) }}</td>
                     <?php $subtotal += ($value->amount * $value->product->price) ?>
                 </tr>
@@ -54,7 +56,7 @@
             </tbody>
             <tfoot style="background-color: grey">
                 <tr>
-                    <th colspan="4" class="text-right">Total</th>
+                    <th colspan="5" class="text-right">Total</th>
                     <th>Rp. {{ number_format($subtotal) }}</th>
                 </tr>
             </tfoot>
