@@ -78,6 +78,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::get('harga-pokok-produksi', [ProductionReportController::class, 'index'])->name('production.index');
         Route::post('harga-pokok-produksi', [ProductionReportController::class, 'post'])->name('production.post');
         Route::get('harga-pokok-produksi-print', [ProductionReportController::class, 'post'])->name('production.print');
+
+        Route::get('harga-pokok-produksi-produk', [ProductionReportController::class, 'produk'])->name('product.index');
+        Route::post('harga-pokok-produksi-produk', [ProductionReportController::class, 'post_produk'])->name('product.post');
+        Route::get('harga-pokok-produksi-print/{product}', [ProductionReportController::class, 'post_produk'])->name('product.print');
     });
 
 });

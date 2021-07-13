@@ -67,7 +67,7 @@
                     {{-- <li class=""><a href=""> Jurnal Umum</a></li>
                     <li class=""><a href=""> Buku Besar</a></li> --}}
                     <li class="{{ request()->segment(3) == 'harga-pokok-produksi' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.production.index') }}"> Harga Pokok Produksi</a></li>
-                    <li class="{{ request()->segment(3) == 'harga-pokok-produksi' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.production.index') }}"> Harga Pokok Produksi Per Produk</a></li>
+                    <li class="{{ request()->segment(3) == 'harga-pokok-produksi-produk' && request()->segment(2) == 'report' ? 'active' : '' }}"><a href="{{ route('report.product.index') }}"> Harga Pokok Produksi Per Produk</a></li>
                 </ul>
             </li>
             @endhasanyrole

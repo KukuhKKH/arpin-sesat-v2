@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Coa;
 use App\Models\Master\Material;
+use App\Models\Master\Product;
 use App\Models\Transaction\MaterialTransaction;
 use App\Models\Transaction\ProductTransaction;
 use Illuminate\Http\Request;
@@ -73,6 +74,72 @@ class ProductionReportController extends Controller
             return view('pages.admin.report.production.table', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'))->render();
         } else {
             return view('pages.admin.report.production.print', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'));
+        }
+    }
+
+    public function produk() {
+        $title = [
+            'page_name' => "Halaman Harga Pokok Produksi",
+            'page_description' => 'Manage Harga Pokok Produksi'
+        ];
+
+        $product = Product::all();
+        return view('pages.admin.report.product.index', compact('title', 'product'));
+    }
+
+    public function post_produk(Request $request) {
+        $total_material = 0;
+        $total_material_helper = 0;
+        $total_salary = 0;
+        $total_overhead_fix = 0;
+        $total_overhead_var = 0;
+
+        $product = $request->product;
+        $productTransaction = ProductTransaction::with(['transaction_material', 'transaction_overhead', 'team'])->whereHas('product', function($q) use ($product) {
+            $q->where("id", $product);
+        })->get();
+
+        foreach ($productTransaction as $key => $value) {
+            $materials = $value->transaction_material()->with('material')->get(); // Material
+            foreach ($materials as $material) {
+                if($material->material->type == 1) {
+                    $total_material += $material->material->price * $material->amount;
+                } else {
+                    $total_material_helper += $material->material->price * $material->amount;
+                }
+            }
+
+            $total_salary += $value->team->salary; // Salary
+
+            /** Overhead */
+            $overheads = $value->transaction_overhead()->with('overhead')->get();
+            foreach ($overheads as $overhead) {
+                if($overhead->overhead->type == 1) {
+                    $total_overhead_fix += $overhead->overhead->price;
+                } else {
+                    $total_overhead_var += $overhead->overhead->price;
+                }
+            }
+        }
+
+
+        if($request->isMethod('post')) {
+            return view('pages.admin.report.product.table', [
+                'total_material' => $total_material,
+                'total_material_helper' => $total_material_helper,
+                'total_salary' => $total_salary,
+                'total_overhead_fix' => $total_overhead_fix,
+                'total_overhead_var' => $total_overhead_var
+            ])->render();
+        } else {
+            return view('pages.admin.report.product.print', [
+                'total_material' => $total_material,
+                'total_material_helper' => $total_material_helper,
+                'total_salary' => $total_salary,
+                'total_overhead_fix' => $total_overhead_fix,
+                'total_overhead_var' => $total_overhead_var,
+                'product' => Product::find($product)
+            ]);
         }
     }
 }
