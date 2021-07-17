@@ -19,9 +19,9 @@
                 <td>{{ ($material_out->currentpage()-1) * $material_out->perpage() + $loop->index + 1 }}</td>
                 <td>{{ date('d F Y', strtotime($value->date)) }}</td>
                 <td>{{ $value->material->name }}</td>
-                <td>{{ $value->price }}</td>
+                <td>Rp {{ $value->price }}</td>
                 <td>{{ $value->amount }}</td>
-                <td>{{ $value->price * $value->amount }}</td>
+                <td>Rp {{ $value->price * $value->amount }}</td>
                 <td>
                     @if ($value->status == 1)
                         <span class="btn btn-rounded btn-warning">Pending</span>

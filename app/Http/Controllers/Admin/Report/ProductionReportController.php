@@ -31,6 +31,9 @@ class ProductionReportController extends Controller
         $total_overhead_var = 0; // Overhead Variabel
         $total_help_material = 0; // Bahan Penolong
         $total_salary = 0; // Biaya Tenaga Kerja
+        $total_dalamproses_awal = 0; //Persediaan produk dalam proses awal
+        $total_dalamproses_akhir = 0; //Persediaan produk dalam proses akhir
+
 
         $stock_material_raw = Material::where('type', $RAW_MATERIAL)->get(); // All bahan Baku
         foreach ($stock_material_raw as $key => $value) {
@@ -69,11 +72,13 @@ class ProductionReportController extends Controller
         }
 
         $total_stock_material += Coa::where('code', '1-102')->first()->balance;
+        $total_dalamproses_awal += Coa::where('code', '5-104')->first()->balance;
+        $total_dalamproses_akhir += Coa::where('code', '5-105')->first()->balance;
 
         if($request->isMethod('post')) {
-            return view('pages.admin.report.production.table', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'))->render();
+            return view('pages.admin.report.production.table', compact( 'total_dalamproses_akhir','total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary','total_dalamproses_awal'))->render();
         } else {
-            return view('pages.admin.report.production.print', compact( 'total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary'));
+            return view('pages.admin.report.production.print', compact( 'total_dalamproses_akhir','total_stock_material', 'total_buying_material', 'total_stock_material_end', 'total_overhead_fix', 'total_overhead_var', 'total_help_material', 'total_salary','total_dalamproses_awal'));
         }
     }
 

@@ -22,7 +22,7 @@
         <center>{{ $product->name }}</center>
     </h3>
     <p>
-        <center> Maret {{ date('Y') }}</center>
+        <center>per 31 Maret {{ date('Y') }}</center>
     </p>
     <div class="container">
         <table class="table table-bordered table-hovered">

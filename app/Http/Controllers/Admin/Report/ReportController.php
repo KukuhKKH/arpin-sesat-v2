@@ -39,13 +39,13 @@ class ReportController extends Controller
     public function stock_material($type) {
         if($type == 1) {
             $title = [
-                'page_name' => "Halaman Laporan Bahan Stok Baku",
-                'page_description' => 'Manage Laporan Bahan Stok Baku'
+                'page_name' => "Halaman Laporan Stok Bahan Baku",
+                'page_description' => 'Manage Laporan Stok Bahan Baku'
             ];
         } else {
             $title = [
-                'page_name' => "Halaman Laporan Bahan Stok Penolong",
-                'page_description' => 'Manage Laporan Bahan Stok Penolong'
+                'page_name' => "Halaman Laporan Stok Bahan Penolong",
+                'page_description' => 'Manage Laporan Stok Bahan Penolong'
             ];
         }
         $material = Material::where('type', $type)->get();

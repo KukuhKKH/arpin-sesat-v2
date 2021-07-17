@@ -50,8 +50,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Saldo Akhir</label>
-                                    <input type="text" class="form-control" id="balance" name="balance" placeholder="Saldo Akhir">
+                                    <label for="">Saldo</label>
+                                    <input type="text" class="form-control" id="balance" name="balance" placeholder="Saldo">
                                 </div>
                             </div>
                         </div>

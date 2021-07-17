@@ -14,7 +14,7 @@
                     Master Data<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
                 </a>
                 <ul id="master" class="nav nav-second collapse {{ request()->segment(2) == 'master' ? 'show' : '' }}">
-                    @role('admin')
+                    @role('admin|produksi')
                     <li class="{{ request()->segment(3) == 'coa' ? 'active' : '' }}"><a href="{{ route('master.coa.index') }}"> COA</a></li>
                     @endrole
                     <li class="{{ request()->segment(2) == 'master' && request()->segment(4) == 1 && request()->segment(3) == 'material' ? 'active' : '' }}"><a href="{{ route('master.material.index', 1) }}"> Bahan Baku</a></li>

@@ -121,7 +121,7 @@ class ProductTransactionController extends Controller
 
     public function indexSelesai()
     {
-        $produkSelesai = ProductTransaction::where('status', 'selesai')->paginate(20);
+        $produkSelesai = ProductTransaction::where('status', 'selesai')->paginate(10);
 
         return view('pages.admin.transaction.production.index-selesai', compact('produkSelesai'));
     }

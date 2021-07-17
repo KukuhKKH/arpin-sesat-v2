@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label for="">Pemasok</label>
                                     <select name="supplier_id" id="supplier_id" class="form-control">
-                                        <option value="" selected disabled>== Pilih Bahan ==</option>
+                                        <option value="" selected disabled>== Pilih Pemasok ==</option>
                                         @foreach ($supplier as $value)
                                             <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach

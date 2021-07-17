@@ -1,13 +1,13 @@
 <table class="table table-responsive-sm">
     <thead>
         <tr>
-            <th>#</th>
+            <th>No</th>
             <th>Tanggal Produksi</th>
             <th>Nama Produk</th>
             <th>Harga Jual</th>
-            <th>Jumlah Produksi</th>
-            <th>Status</th>
+            <th>Jumlah</th>
             <th>Total Harga Jual</th>
+            <th>Status</th>
             <th>Biaya Per Unit</th>
             <th>Biaya Produksi</th>
             <th>Aksi</th>
@@ -21,10 +21,10 @@
                 <td>{{ $value->product->name }}</td>
                 <td>Rp. {{ number_format($value->product->price) }}</td>
                 <td>{{ $value->amount }}</td>
+                <td>Rp. {{ number_format(($value->product->price * $value->amount)) }}</td>
                 <td>
                     <div class="badge badge-success">{{ ucwords($value->status) }}</div>
                 </td>
-                <td>Rp. {{ number_format(($value->product->price * $value->amount)) }}</td>
                 @php
                     $price_team = $value->team->salary;
                     $price_material = 0;
@@ -55,7 +55,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="8" class="text-center">Tidak ada data</td>
+                <td colspan="9" class="text-center">Tidak ada data</td>
             </tr>
         @endforelse
     </tbody>

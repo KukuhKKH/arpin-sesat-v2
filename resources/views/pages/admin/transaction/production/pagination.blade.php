@@ -1,7 +1,7 @@
 <table class="table table-responsive-sm">
     <thead>
         <tr>
-            <th>#</th>
+            <th>No</th>
             <th>Tanggal Produksi</th>
             <th>Nama Produk</th>
             <th>Harga Jual</th>

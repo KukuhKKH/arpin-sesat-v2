@@ -78,11 +78,11 @@
         <tr>
             <td>Produk Dalam Proses Awal</td>
             <td></td>
-            <td>Rp {{ number_format(0) }}</td>
+            <td>Rp {{ number_format($total_dalamproses_awal) }}</td>
         </tr>
         <tr>
             @php
-                $total = $subtotal + $subtotal_bop
+                $total = $subtotal + $subtotal_bop + $total_dalamproses_awal
             @endphp
             <td>Produk Selesai</td>
             <td></td>
@@ -91,11 +91,11 @@
         <tr>
             <td>Produk Dalam Proses Akhir</td>
             <td></td>
-            <td>Rp {{ number_format(0) }}</td>
+            <td>Rp {{ number_format($total_dalamproses_akhir) }}</td>
         </tr>
         <tr>
             @php
-                $total = $subtotal + $subtotal_bop
+                $total = $subtotal + $subtotal_bop + $total_dalamproses_awal - $total_dalamproses_akhir
             @endphp
             <td>Harga Pokok Produksi</td>
             <td></td>

@@ -17,7 +17,7 @@
         <center>Laporan Penjualan Produk</center>
     </h3>
     <p>
-        <center>{{ date('D d F Y') }}</center>
+        <center>per 31 Maret {{ date('Y') }}</center>
     </p>
 
     <div class="container">
@@ -42,7 +42,7 @@
                     <td>{{ $value->customer->name }}</td>
                     <td>{{ $value->product->name }}</td>
                     <td>{{ $value->amount }}</td>
-                    <td>{{ $value->product->price }}</td>
+                    <td>Rp. {{ number_format ($value->product->price) }}</td>
                     <td>Rp. {{ number_format(($value->amount * $value->product->price)) }}</td>
                     <?php $subtotal += ($value->amount * $value->product->price) ?>
                 </tr>

@@ -18,7 +18,7 @@
         <center>Laporan Harga Pokok Produksi</center>
     </h3>
     <p>
-        <center> Maret {{ date('Y') }}</center>
+        <center> per 31 Maret {{ date('Y') }}</center>
     </p>
     <div class="container">
         <table class="table table-bordered table-hovered">
@@ -101,7 +101,7 @@
                 <tr>
                     <td>Produk Dalam Proses Awal</td>
                     <td></td>
-                    <td>Rp {{ number_format(0) }}</td>
+                    <td>Rp {{ number_format($total_dalamproses_awal) }}</td>
                 </tr>
                 <tr>
                     @php

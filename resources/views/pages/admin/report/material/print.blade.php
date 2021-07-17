@@ -17,7 +17,7 @@
         <center>Laporan Pembelian Bahan {{ $type == 1 ? 'Baku' : 'Penolong' }}</center>
     </h3>
     <p>
-        <center>{{ date('D d F Y') }}</center>
+        <center> per 31 Maret {{ date('Y') }}</center>
     </p>
 
     <div class="container">
@@ -41,7 +41,7 @@
                     <td>{{ $value->invoice }}</td>
                     <td>{{ $value->supplier->name }}</td>
                     <td>{{ $value->material->name }}</td>
-                    <td>{{ $value->price }}</td>
+                    <td>Rp. {{ number_format($value->price) }}</td>
                     <td>{{ $value->amount }}</td>
                     <td>Rp. {{ number_format(($value->amount * $value->price)) }}</td>
                     <?php $subtotal += ($value->amount * $value->price) ?>

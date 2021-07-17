@@ -30,8 +30,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
         Route::resource('supplier', SupplierController::class)->except(['show', 'create']);
         Route::resource('product', ProductController::class)->except(['show', 'create']);
         Route::resource('customer', CustomerController::class)->except(['show', 'create']);
+        Route::resource('coa', CoaController::class)->except(['show', 'create']);
         Route::group(['middleware' => 'role:admin'], function() {
-            Route::resource('coa', CoaController::class)->except(['show', 'create'])->middleware('role:admin');
+            
             Route::resource('user', UserController::class)->except(['show', 'create'])->middleware('role:admin');
         });
     });
