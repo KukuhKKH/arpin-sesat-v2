@@ -119,10 +119,15 @@ class ProductTransactionController extends Controller
         return redirect()->back()->with('success', 'Produksi Selesai');
     }
 
-    public function indexSelesai()
+    public function indexSelesai(Request $request)
     {
+        $data = $request->all();
         $produkSelesai = ProductTransaction::where('status', 'selesai')->paginate(10);
 
-        return view('pages.admin.transaction.production.index-selesai', compact('produkSelesai'));
+        if($request->ajax()) {
+            return view("pages.admin.transaction.production.selesai-table",compact('data', 'produkSelesai'))->render();
+        }
+
+        return view('pages.admin.transaction.production.index-selesai', compact('produkSelesai', 'data'));
     }
 }
